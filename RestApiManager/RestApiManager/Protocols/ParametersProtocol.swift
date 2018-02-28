@@ -10,7 +10,7 @@ import Foundation
 
 /// ParametersProtocol
 public protocol ParametersProtocol {
-    typealias Parameters = [String: Any]
+    typealias Parameters = Any
     
-    var dictionaryValue: Parameters { get }
+    var parametersValue: Parameters { get }
 }

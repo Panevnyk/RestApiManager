@@ -10,7 +10,7 @@ import Foundation
 
 extension URLRequest {
     
-    mutating public func addHttpBody(parameters: [String: Any]) {
+    mutating public func addHttpBody(parameters: Any) {
         do {
             let jsonObject = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
             httpBody = jsonObject

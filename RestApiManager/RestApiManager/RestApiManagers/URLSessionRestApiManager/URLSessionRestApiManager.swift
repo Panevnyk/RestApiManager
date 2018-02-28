@@ -8,12 +8,16 @@
 
 import Foundation
 
-/// Associated
+// MARK: - Associated = Codable
 public typealias Associated = Codable
 
-/// URLSessionRestApiManager
+// MARK: - URLSessionRestApiManager
 open class URLSessionRestApiManager: RestApiManager {
 
+    // ---------------------------------------------------------------------
+    // MARK: - Simple requests
+    // ---------------------------------------------------------------------
+    
     /// Object call
     ///
     /// - Parameters:
@@ -32,7 +36,37 @@ open class URLSessionRestApiManager: RestApiManager {
         createDataTask(method: method, completion: completion)
     }
     
-    /// Multipart call
+    /// String call
+    ///
+    /// - Parameters:
+    ///   - method: RestApiMethod
+    ///   - completion: Result<String>
+    public func call(method: RestApiMethod, completion: @escaping (_ result: Result<String>) -> Void) {
+        createDataTask(method: method, completion: completion) { (data) in
+            if let answer = String(data: data, encoding: .utf8) {
+                completion(.success(answer))
+            } else {
+                completion(.failure(self.errorType.unknown))
+            }
+        }
+    }
+    
+    /// Custom response serializer call
+    ///
+    /// - Parameters:
+    ///   - method: RestApiMethod
+    ///   - responseSerializer: T where T: ResponseSerializer
+    public func call<T: ResponseSerializer>(method: RestApiMethod, responseSerializer: T) {
+        createDataTask(method: method) { (data, urlResponse, error) in
+            responseSerializer.parse(method: method, response: urlResponse as? HTTPURLResponse, data: data, error: error)
+        }
+    }
+    
+    // ---------------------------------------------------------------------
+    // MARK: - Multipart
+    // ---------------------------------------------------------------------
+    
+    /// Multipart Object call
     ///
     /// - Parameters:
     ///   - multipartData: MultipartData
@@ -48,82 +82,122 @@ open class URLSessionRestApiManager: RestApiManager {
         
         URLSession.shared.uploadTask(with: request, from: multipartData.data) { (data, _, error) in
             self.handleResponse(data: data, error: error, completion: completion, completionHandler: { (data) in
-                self.handleResponse(data: data, completion: completion)
+                self.decode(data: data, completion: completion)
             })
         }.resume()
     }
     
-    /// Custom response serializer call
+    /// Multipart Array call
     ///
     /// - Parameters:
+    ///   - multipartData: MultipartData
     ///   - method: RestApiMethod
-    ///   - responseSerializer: T where T: ResponseSerializer
-    public func call<T: ResponseSerializer>(method: RestApiMethod, responseSerializer: T) {
-        createDataTask(method: method) { (data, urlResponse, error) in
-            responseSerializer.parse(method: method, response: urlResponse as? HTTPURLResponse, data: data, error: error)
+    ///   - completion: Result<[T]>
+    public func call<T: Associated>(multipartData: MultipartData,
+                                    method: RestApiMethod,
+                                    completion: @escaping (_ result: Result<[T]>) -> Void) {
+        guard let request = request(method: method) else {
+            completion(.failure(errorType.unknown))
+            return
         }
-    }
-    
-    /// String call
-    ///
-    /// - Parameters:
-    ///   - method: RestApiMethod
-    ///   - completion: Result<String>
-    public func call(method: RestApiMethod, completion: @escaping (_ result: Result<String>) -> Void) {
-        createDataTask(method: method, completion: completion) { (data) in
-            if let answer = String(data: data, encoding: .utf8) {
-                completion(.success(answer))
-            } else {
-                completion(.failure(self.errorType.unknown))
-            }
-        }
+        
+        URLSession.shared.uploadTask(with: request, from: multipartData.data) { (data, _, error) in
+            self.handleResponse(data: data, error: error, completion: completion, completionHandler: { (data) in
+                self.decode(data: data, completion: completion)
+            })
+        }.resume()
     }
 
+    /// Multipart String call
+    ///
+    /// - Parameters:
+    ///   - multipartData: MultipartData
+    ///   - method: RestApiMethod
+    ///   - completion: Result<String>
+    public func call(multipartData: MultipartData,
+                     method: RestApiMethod,
+                     completion: @escaping (_ result: Result<String>) -> Void) {
+        guard let request = request(method: method) else {
+            completion(.failure(errorType.unknown))
+            return
+        }
+        
+        URLSession.shared.uploadTask(with: request, from: multipartData.data) { (data, _, error) in
+            self.handleResponse(data: data, error: error, completion: completion, completionHandler: { (data) in
+                if let answer = String(data: data, encoding: .utf8) {
+                    completion(.success(answer))
+                } else {
+                    completion(.failure(self.errorType.unknown))
+                }
+            })
+        }.resume()
+    }
+
+    /// Multipart Custom response serializer call
+    ///
+    /// - Parameters:
+    ///   - multipartData: MultipartData
+    ///   - method: RestApiMethod
+    ///   - responseSerializer: T where T: ResponseSerializer
+    public func call<T: ResponseSerializer>(multipartData: MultipartData,
+                                            method: RestApiMethod,
+                                            responseSerializer: T) {
+        guard let request = request(method: method) else {
+            responseSerializer.completion(.failure(errorType.unknown))
+            return
+        }
+        
+        URLSession.shared.uploadTask(with: request, from: multipartData.data) { (data, urlResponse, error) in
+            self.handleResponse(data: data, error: error, completion: responseSerializer.completion, completionHandler: { (data) in
+                responseSerializer.parse(method: method, response: urlResponse as? HTTPURLResponse, data: data, error: error)
+            })
+        }.resume()
+    }
+    
+    /// Deinit
     deinit {
         print(" --- URLSessionRestApiManager deinit --- ")
     }
 }
 
 // MARK: - DataTask
-extension URLSessionRestApiManager {
-    private func createDataTask<T: Associated>(method: RestApiMethod,
-                                               completion: @escaping (_ result: Result<T>) -> Void) {
+private extension URLSessionRestApiManager {
+    func createDataTask<T: Associated>(method: RestApiMethod,
+                                       completion: @escaping (_ result: Result<T>) -> Void) {
         createDataTask(method: method, completion: completion) { (data) in
-            self.handleResponse(data: data, completion: completion)
+            self.decode(data: data, completion: completion)
         }
     }
     
-    private func createDataTask<T>(method: RestApiMethod,
-                                   completion: @escaping (_ result: Result<T>) -> Void,
-                                   completionHandler: @escaping (Data) -> Swift.Void) {
-        
+    func createDataTask<T>(method: RestApiMethod,
+                           completion: @escaping (_ result: Result<T>) -> Void,
+                           completionHandler: @escaping (Data) -> Swift.Void) {
         createDataTask(method: method) { (data, _, error) in
             self.handleResponse(data: data, error: error, completion: completion, completionHandler: completionHandler)
         }
     }
     
-    private func createDataTask(method: RestApiMethod,
-                                completionHandler: @escaping (Data?, URLResponse?, Error?) -> Swift.Void) {
+    func createDataTask(method: RestApiMethod,
+                        completionHandler: @escaping (Data?, URLResponse?, Error?) -> Swift.Void) {
         guard let request = request(method: method) else {
             completionHandler(nil, nil, self.errorType.unknown)
             return
         }
         
         let dataTask = URLSession.shared.dataTask(with: request) { (data, urlResponse, error) in
-            // Print response
+            /// Print response
             self.printDataResponse(urlResponse, request: request, data: data)
-            // Completion Handler
+            /// Completion Handler
             completionHandler(data, urlResponse, error)
         }
         dataTask.resume()
     }
-
 }
 
 // MARK: - Handle Response
-extension URLSessionRestApiManager {
-    private func handleResponse<T: Associated>(data: Data,
-                                               completion: @escaping (_ result: Result<T>) -> Void) {
+private extension URLSessionRestApiManager {
+    func decode<T: Associated>(data: Data,
+                               completion: @escaping (_ result: Result<T>) -> Void) {
         do {
             let object = try JSONDecoder().decode(T.self, from: data)
             completion(.success(object))
@@ -132,24 +206,24 @@ extension URLSessionRestApiManager {
         }
     }
     
-    private func handleResponse<T>(data: Data?,
-                                   error: Error?,
-                                   completion: @escaping (_ result: Result<T>) -> Void,
-                                   completionHandler: @escaping (Data) -> Swift.Void) {
+    func handleResponse<T>(data: Data?,
+                           error: Error?,
+                           completion: @escaping (_ result: Result<T>) -> Void,
+                           completionHandler: @escaping (Data) -> Swift.Void) {
         
-        // Handle custom error
+        /// Handle custom error
         if let error = errorType.handle(error: error, data: data) {
             completion(.failure(error))
         }
-        // Hadle Error
+        /// Hadle Error
         else if let error = error {
             completion(.failure(errorType.init(error: error)))
         }
-        // Hadle Data
+        /// Hadle Data
         else if let data = data {
             completionHandler(data)
         }
-        // Hadle unknown result
+        /// Hadle unknown result
         else {
             completion(.failure(errorType.unknown))
         }

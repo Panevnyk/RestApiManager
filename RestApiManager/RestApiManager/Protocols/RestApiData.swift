@@ -13,7 +13,7 @@ public struct RestApiData {
     var url: String
     var httpMethod: HttpMethod
     var headers: [String: String]?
-    var parameters: [String: Any]
+    var parameters: Any
     var keyPath: String?
     
     init(url: String,
@@ -25,12 +25,15 @@ public struct RestApiData {
         self.httpMethod = httpMethod
         self.headers = headers
         self.keyPath = keyPath
-        self.parameters = parameters?.dictionaryValue ?? [:]
+        self.parameters = parameters?.parametersValue ?? [:]
     }
 }
 
 extension RestApiData {
     var urlWithParametersString: String {
+        guard let parameters = parameters as? [String: Any] else {
+            return url
+        }
         var parametersString = ""
         for (offset: i, element: (key: key, value: value)) in parameters.enumerated() {
             parametersString += "\(key)=\(value)"
