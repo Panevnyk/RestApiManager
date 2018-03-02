@@ -16,11 +16,11 @@ public struct RestApiData {
     var parameters: Any
     var keyPath: String?
     
-    init(url: String,
-         httpMethod: HttpMethod,
-         headers: [String: String]? = nil,
-         parameters: ParametersProtocol? = nil,
-         keyPath: String? = nil) {
+    public init(url: String,
+                httpMethod: HttpMethod,
+                headers: [String: String]? = nil,
+                parameters: ParametersProtocol? = nil,
+                keyPath: String? = nil) {
         self.url = url
         self.httpMethod = httpMethod
         self.headers = headers
