@@ -82,7 +82,7 @@ open class URLSessionRestApiManager: RestApiManager {
         
         URLSession.shared.uploadTask(with: request, from: multipartData.data) { (data, _, error) in
             self.handleResponse(data: data, error: error, completion: completion, completionHandler: { (data) in
-                self.decode(data: data, completion: completion)
+                self.decode(data: data, keyPath: method.data.keyPath, completion: completion)
             })
         }.resume()
     }
@@ -103,7 +103,7 @@ open class URLSessionRestApiManager: RestApiManager {
         
         URLSession.shared.uploadTask(with: request, from: multipartData.data) { (data, _, error) in
             self.handleResponse(data: data, error: error, completion: completion, completionHandler: { (data) in
-                self.decode(data: data, completion: completion)
+                self.decode(data: data, keyPath: method.data.keyPath, completion: completion)
             })
         }.resume()
     }
@@ -165,7 +165,7 @@ private extension URLSessionRestApiManager {
     func createDataTask<T: Associated>(method: RestApiMethod,
                                        completion: @escaping (_ result: Result<T>) -> Void) {
         createDataTask(method: method, completion: completion) { (data) in
-            self.decode(data: data, completion: completion)
+            self.decode(data: data, keyPath: method.data.keyPath, completion: completion)
         }
     }
     
@@ -197,9 +197,10 @@ private extension URLSessionRestApiManager {
 // MARK: - Handle Response
 private extension URLSessionRestApiManager {
     func decode<T: Associated>(data: Data,
+                               keyPath: String?,
                                completion: @escaping (_ result: Result<T>) -> Void) {
         do {
-            let object = try JSONDecoder().decode(T.self, from: data)
+            let object = try JSONDecoder().decode(T.self, from: data, keyPath: keyPath)
             completion(.success(object))
         } catch let error {
             completion(.failure(errorType.init(error: error)))

@@ -37,6 +37,7 @@
 		D128BD1120469039004E0917 /* RestApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D128BCF420469039004E0917 /* RestApiManager.swift */; };
 		D128BD1220469039004E0917 /* RestApiManager+SuccessCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D128BCF520469039004E0917 /* RestApiManager+SuccessCompletion.swift */; };
 		D128BD1320469039004E0917 /* RestApiManager+LoadIndecator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D128BCF620469039004E0917 /* RestApiManager+LoadIndecator.swift */; };
+		D18621062049D08400660379 /* JSONDecoder+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18621052049D08400660379 /* JSONDecoder+KeyPath.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,7 @@
 		D128BCF420469039004E0917 /* RestApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestApiManager.swift; sourceTree = "<group>"; };
 		D128BCF520469039004E0917 /* RestApiManager+SuccessCompletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestApiManager+SuccessCompletion.swift"; sourceTree = "<group>"; };
 		D128BCF620469039004E0917 /* RestApiManager+LoadIndecator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestApiManager+LoadIndecator.swift"; sourceTree = "<group>"; };
+		D18621052049D08400660379 /* JSONDecoder+KeyPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+KeyPath.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 			children = (
 				D128BCDF20469039004E0917 /* URLRequest+Utils.swift */,
 				D128BCE020469039004E0917 /* UIApplication+ViewControllerForPresent.swift */,
+				D18621052049D08400660379 /* JSONDecoder+KeyPath.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				D128BD1220469039004E0917 /* RestApiManager+SuccessCompletion.swift in Sources */,
 				D128BD0320469039004E0917 /* UIApplication+ViewControllerForPresent.swift in Sources */,
 				D128BD0D20469039004E0917 /* URLSessionRestApiManager.swift in Sources */,
+				D18621062049D08400660379 /* JSONDecoder+KeyPath.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
