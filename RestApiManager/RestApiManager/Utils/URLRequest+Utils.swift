@@ -9,7 +9,6 @@
 import Foundation
 
 extension URLRequest {
-    
     mutating public func addHttpBody(parameters: Any) {
         do {
             let jsonObject = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
@@ -21,10 +20,11 @@ extension URLRequest {
     
     mutating public func addHeaders(_ headers: [String: String]?) {
         var headers: [String: String] = headers ?? [:]
-        headers["Content-Type"] = "application/json"
+        if headers["Content-Type"] == nil {
+            headers["Content-Type"] = "application/json"
+        }
         for (headerField, value) in headers {
             setValue(value, forHTTPHeaderField: headerField)
         }
     }
-    
 }
