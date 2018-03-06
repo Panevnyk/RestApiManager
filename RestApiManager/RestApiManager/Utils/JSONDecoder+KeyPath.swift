@@ -22,8 +22,12 @@ public extension JSONDecoder {
                    from data: Data,
                    keyPath: String?,
                    keyPathSeparator separator: String = ".") throws -> T where T : Decodable {
-        userInfo[keyPathUserInfoKey] = keyPath?.components(separatedBy: separator)
-        return try decode(KeyPathWrapper<T>.self, from: data).object
+        if let keyPath = keyPath, !keyPath.isEmpty {
+            userInfo[keyPathUserInfoKey] = keyPath.components(separatedBy: separator)
+            return try decode(KeyPathWrapper<T>.self, from: data).object
+        } else {
+            return try decode(T.self, from: data)
+        }
     }
 }
 
