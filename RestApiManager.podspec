@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "RestApiManager"
-  s.version      = "0.0.4"
+  s.version      = "0.0.5"
   s.summary      = "RestApiManager"
   s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.0' }
 
@@ -66,7 +66,7 @@ Pod::Spec.new do |s|
   # s.platform     = :ios, "5.0"
 
   #  When using multiple platforms
-  s.ios.deployment_target = "11.0"
+  s.ios.deployment_target = "10.0"
   # s.osx.deployment_target = "10.7"
   # s.watchos.deployment_target = "2.0"
   # s.tvos.deployment_target = "9.0"

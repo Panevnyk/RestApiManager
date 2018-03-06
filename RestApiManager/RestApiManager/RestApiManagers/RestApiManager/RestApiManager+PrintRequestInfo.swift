@@ -20,7 +20,6 @@ extension RestApiManager {
                 let statusCode = urlDataResponse.statusCode
                 print("\n\n-------------------------------------------------------------")
                 print("\(statusCode == 200 ? "SUCCESS" : "ERROR") \(statusCode)")
-                print("\theaders: \(urlDataResponse.allHeaderFields)")
             }
             if let request = request {
                 print("REQUEST:\n\t\(request)")
