@@ -58,7 +58,9 @@ open class URLSessionRestApiManager: RestApiManager {
     ///   - responseSerializer: T where T: ResponseSerializer
     public func call<T: ResponseSerializer>(method: RestApiMethod, responseSerializer: T) {
         createDataTask(method: method) { (data, urlResponse, error) in
-            responseSerializer.parse(method: method, response: urlResponse as? HTTPURLResponse, data: data, error: error)
+            self.handleCustomSerializerResponse(data: data, error: error, responseSerializer: responseSerializer, completionHandler: { (resData) in
+                responseSerializer.parse(method: method, response: urlResponse as? HTTPURLResponse, data: resData, error: error)
+            })
         }
     }
     
@@ -118,13 +120,10 @@ open class URLSessionRestApiManager: RestApiManager {
                                             method: RestApiMethod,
                                             responseSerializer: T) {
         createMultipartDataTask(multipartData: multipartData, method: method) { (data, urlResponse, error) in
-            responseSerializer.parse(method: method, response: urlResponse as? HTTPURLResponse, data: data, error: error)
+            self.handleCustomSerializerResponse(data: data, error: error, responseSerializer: responseSerializer, completionHandler: { (resData) in
+                responseSerializer.parse(method: method, response: urlResponse as? HTTPURLResponse, data: resData, error: error)
+            })
         }
-    }
-    
-    /// Deinit
-    deinit {
-        print(" --- URLSessionRestApiManager deinit --- ")
     }
 }
 
@@ -221,17 +220,40 @@ private extension URLSessionRestApiManager {
         if let error = errorType.handle(error: error, data: data) {
             completion(.failure(error))
         }
-        /// Hadle Error
+        /// Handle Error
         else if let error = error {
             completion(.failure(errorType.init(error: error)))
         }
-        /// Hadle Data
+        /// Handle Data
         else if let data = data {
             completionHandler(data)
         }
-        /// Hadle unknown result
+        /// Handle unknown result
         else {
             completion(.failure(errorType.unknown))
+        }
+    }
+    
+    func handleCustomSerializerResponse<T: ResponseSerializer>(data: Data?,
+                                                               error: Error?,
+                                                               responseSerializer: T,
+                                                               completionHandler: @escaping (Data) -> Swift.Void) {
+        
+        /// Handle custom error
+        if let error = errorType.handle(error: error, data: data) {
+            responseSerializer.completion(.failure(error))
+        }
+        /// Handle Error
+        else if let error = error {
+            responseSerializer.completion(.failure(errorType.init(error: error)))
+        }
+        /// Handle Data
+        else if let data = data {
+            completionHandler(data)
+        }
+        /// Handle unknown result
+        else {
+            responseSerializer.completion(.failure(errorType.unknown))
         }
     }
 }

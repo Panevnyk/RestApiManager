@@ -15,6 +15,7 @@ extension RestApiManager {
     }
     
     func printDataResponse(_ dataResponse: URLResponse?, request: URLRequest?, data: Data?) {
+        #if DEBUG
         if printRequestInfo {
             if let urlDataResponse = dataResponse as? HTTPURLResponse {
                 let statusCode = urlDataResponse.statusCode
@@ -22,26 +23,30 @@ extension RestApiManager {
                 print("\(statusCode == 200 ? "SUCCESS" : "ERROR") \(statusCode)")
             }
             if let request = request {
-                print("REQUEST:\n\t\(request)")
+                print("\nREQUEST:\n\t\(request)")
                 if let headers = request.allHTTPHeaderFields {
                     print("\tHeaders: \(headers)")
                 }
-                if let httpBody = request.httpBody,
-                    let parameters = String(data: httpBody, encoding: .utf8) {
-                    print("\tParameters: \(parameters)")
+                if let httpBody = request.httpBody {
+                    do {
+                        print("\tParameters: \(try JSONSerialization.jsonObject(with: httpBody, options: .allowFragments))")
+                    } catch let error {
+                        print("\tParameters: Throw error: \(error)")
+                    }
                 }
             }
             do {
                 if let data = data {
-                    print("RESPONSE:\n\(try JSONSerialization.jsonObject(with: data, options: .allowFragments))")
+                    print("\nRESPONSE:\n\(try JSONSerialization.jsonObject(with: data, options: .allowFragments))")
                 } else {
-                    print("RESPONSE:\n\tNo Data")
+                    print("\nRESPONSE:\n\tNo Data")
                 }
             } catch let error {
-                print("RESPONSE:\n\tThrow error: \(error)")
+                print("\nRESPONSE:\n\tThrow error: \(error)")
             }
             print("-------------------------------------------------------------\n\n")
         }
+        #endif
     }
 }
 
