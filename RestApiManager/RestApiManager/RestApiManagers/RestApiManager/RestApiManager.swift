@@ -27,10 +27,6 @@ public protocol RestApiManager {
     /// - Parameters:
     ///   - method: RestApiMethod
     ///   - completion: Result<[T]>
-    ///
-    /// - Parameters:
-    ///   - method: RestApiMethod
-    ///   - completion: Result<T>
     func call<T: Associated>(method: RestApiMethod, completion: @escaping (_ result: Result<[T]>) -> Void)
     
     /// String call

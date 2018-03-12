@@ -8,8 +8,8 @@
 
 import Foundation
 
-// MARK: - Associated = Codable
-public typealias Associated = Codable
+// MARK: - Associated = Decodable
+public typealias Associated = Decodable
 
 // MARK: - URLSessionRestApiManager
 open class URLSessionRestApiManager: RestApiManager {
