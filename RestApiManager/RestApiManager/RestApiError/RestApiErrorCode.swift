@@ -10,7 +10,7 @@ import Foundation
 
 /// RestApiErrorCode
 public struct RestApiErrorCode {
-    static let noInternetConnection = -1009
-    static let unknown = 0
-    static let noData = 1
+    public static let noInternetConnection = -1009
+    public static let unknown = 0
+    public static let noData = 1
 }
