@@ -125,6 +125,9 @@ open class URLSessionRestApiManager: RestApiManager {
             })
         }
     }
+    
+    /// Init
+    public init() {}
 }
 
 // MARK: - DataTask
