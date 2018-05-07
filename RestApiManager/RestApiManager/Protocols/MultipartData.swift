@@ -21,6 +21,16 @@ public struct MultipartObject {
     var data: Data
     var mimeType: String
     var filename: String
+    
+    public init(key: String,
+                data: Data,
+                mimeType: String,
+                filename: String) {
+        self.key = key
+        self.data = data
+        self.mimeType = mimeType
+        self.filename = filename
+    }
 }
 
 /// MultipartData extension for generate final data
