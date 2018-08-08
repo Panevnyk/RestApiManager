@@ -20,4 +20,6 @@ public class RestApiConfigurator {
     public var printRequestInfo = true
     /// RestApiManager
     public var restApiManager: RestApiManager = URLSessionRestApiManager()
+    /// JSONDecoder
+    public var jsonDecoder = JSONDecoder()
 }

@@ -207,7 +207,7 @@ private extension URLSessionRestApiManager {
                                keyPath: String?,
                                completion: @escaping (_ result: Result<T>) -> Void) {
         do {
-            let object = try JSONDecoder().decode(T.self, from: data, keyPath: keyPath)
+            let object = try jsonDecoder.decode(T.self, from: data, keyPath: keyPath)
             completion(.success(object))
         } catch let error {
             completion(.failure(errorType.init(error: error)))
