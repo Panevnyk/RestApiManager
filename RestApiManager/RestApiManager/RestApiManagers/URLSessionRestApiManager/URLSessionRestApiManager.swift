@@ -14,6 +14,9 @@ public typealias Associated = Decodable
 // MARK: - URLSessionRestApiManager
 open class URLSessionRestApiManager: RestApiManager {
 
+    /// Current URLSessionTask
+    public var currentURLSessionTasks: [URLSessionTask] = []
+    
     // ---------------------------------------------------------------------
     // MARK: - Simple requests
     // ---------------------------------------------------------------------
@@ -23,8 +26,10 @@ open class URLSessionRestApiManager: RestApiManager {
     /// - Parameters:
     ///   - method: RestApiMethod
     ///   - completion: Result<T>
-    public func call<T: Associated>(method: RestApiMethod, completion: @escaping (_ result: Result<T>) -> Void) {
-        createDataTask(method: method, completion: completion)
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    public func call<T: Associated>(method: RestApiMethod, completion: @escaping (_ result: Result<T>) -> Void) -> URLSessionTask? {
+        return createDataTask(method: method, completion: completion)
     }
     
     /// Array call
@@ -32,8 +37,10 @@ open class URLSessionRestApiManager: RestApiManager {
     /// - Parameters:
     ///   - method: RestApiMethod
     ///   - completion: Result<[T]>
-    public func call<T: Associated>(method: RestApiMethod, completion: @escaping (_ result: Result<[T]>) -> Void) {
-        createDataTask(method: method, completion: completion)
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    public func call<T: Associated>(method: RestApiMethod, completion: @escaping (_ result: Result<[T]>) -> Void) -> URLSessionTask? {
+        return createDataTask(method: method, completion: completion)
     }
     
     /// String call
@@ -41,8 +48,10 @@ open class URLSessionRestApiManager: RestApiManager {
     /// - Parameters:
     ///   - method: RestApiMethod
     ///   - completion: Result<String>
-    public func call(method: RestApiMethod, completion: @escaping (_ result: Result<String>) -> Void) {
-        createDataTask(method: method, completion: completion) { [unowned self] (data) in
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    public func call(method: RestApiMethod, completion: @escaping (_ result: Result<String>) -> Void) -> URLSessionTask? {
+        return createDataTask(method: method, completion: completion) { [unowned self] (data) in
             if let value = String(data: data, encoding: .utf8) {
                 completion(.success(value))
             } else {
@@ -56,8 +65,10 @@ open class URLSessionRestApiManager: RestApiManager {
     /// - Parameters:
     ///   - method: RestApiMethod
     ///   - responseSerializer: T where T: ResponseSerializer
-    public func call<T: ResponseSerializer>(method: RestApiMethod, responseSerializer: T) {
-        createDataTask(method: method) { (data, urlResponse, error) in
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    public func call<T: ResponseSerializer>(method: RestApiMethod, responseSerializer: T) -> URLSessionTask? {
+        return createDataTask(method: method) { (data, urlResponse, error) in
             self.handleCustomSerializerResponse(data: data, error: error, responseSerializer: responseSerializer, completionHandler: { (resData) in
                 responseSerializer.parse(method: method, response: urlResponse as? HTTPURLResponse, data: resData, error: error)
             })
@@ -74,10 +85,12 @@ open class URLSessionRestApiManager: RestApiManager {
     ///   - multipartData: MultipartData
     ///   - method: RestApiMethod
     ///   - completion: Result<T>
+    /// - Returns: URLSessionTask?
+    @discardableResult
     public func call<T: Associated>(multipartData: MultipartData,
                                     method: RestApiMethod,
-                                    completion: @escaping (_ result: Result<T>) -> Void) {
-        createMultipartDataTask(multipartData: multipartData, method: method, completion: completion)
+                                    completion: @escaping (_ result: Result<T>) -> Void) -> URLSessionTask? {
+        return createMultipartDataTask(multipartData: multipartData, method: method, completion: completion)
     }
     
     /// Multipart Array call
@@ -86,10 +99,12 @@ open class URLSessionRestApiManager: RestApiManager {
     ///   - multipartData: MultipartData
     ///   - method: RestApiMethod
     ///   - completion: Result<[T]>
+    /// - Returns: URLSessionTask?
+    @discardableResult
     public func call<T: Associated>(multipartData: MultipartData,
                                     method: RestApiMethod,
-                                    completion: @escaping (_ result: Result<[T]>) -> Void) {
-        createMultipartDataTask(multipartData: multipartData, method: method, completion: completion)
+                                    completion: @escaping (_ result: Result<[T]>) -> Void) -> URLSessionTask? {
+        return createMultipartDataTask(multipartData: multipartData, method: method, completion: completion)
     }
 
     /// Multipart String call
@@ -98,10 +113,12 @@ open class URLSessionRestApiManager: RestApiManager {
     ///   - multipartData: MultipartData
     ///   - method: RestApiMethod
     ///   - completion: Result<String>
+    /// - Returns: URLSessionTask?
+    @discardableResult
     public func call(multipartData: MultipartData,
                      method: RestApiMethod,
-                     completion: @escaping (_ result: Result<String>) -> Void) {
-        createMultipartDataTask(multipartData: multipartData, method: method, completion: completion) { [unowned self] (data) in
+                     completion: @escaping (_ result: Result<String>) -> Void) -> URLSessionTask? {
+        return createMultipartDataTask(multipartData: multipartData, method: method, completion: completion) { [unowned self] (data) in
             if let value = String(data: data, encoding: .utf8) {
                 completion(.success(value))
             } else {
@@ -116,10 +133,12 @@ open class URLSessionRestApiManager: RestApiManager {
     ///   - multipartData: MultipartData
     ///   - method: RestApiMethod
     ///   - responseSerializer: T where T: ResponseSerializer
+    /// - Returns: URLSessionTask?
+    @discardableResult
     public func call<T: ResponseSerializer>(multipartData: MultipartData,
                                             method: RestApiMethod,
-                                            responseSerializer: T) {
-        createMultipartDataTask(multipartData: multipartData, method: method) { (data, urlResponse, error) in
+                                            responseSerializer: T) -> URLSessionTask? {
+        return createMultipartDataTask(multipartData: multipartData, method: method) { (data, urlResponse, error) in
             self.handleCustomSerializerResponse(data: data, error: error, responseSerializer: responseSerializer, completionHandler: { (resData) in
                 responseSerializer.parse(method: method, response: urlResponse as? HTTPURLResponse, data: resData, error: error)
             })
@@ -133,34 +152,42 @@ open class URLSessionRestApiManager: RestApiManager {
 // MARK: - DataTask
 private extension URLSessionRestApiManager {
     func createDataTask<T: Associated>(method: RestApiMethod,
-                                       completion: @escaping (_ result: Result<T>) -> Void) {
-        createDataTask(method: method, completion: completion) { [unowned self] (data) in
+                                       completion: @escaping (_ result: Result<T>) -> Void) -> URLSessionTask? {
+        return createDataTask(method: method, completion: completion) { [unowned self] (data) in
             self.decode(data: data, keyPath: method.data.keyPath, completion: completion)
         }
     }
     
     func createDataTask<T>(method: RestApiMethod,
                            completion: @escaping (_ result: Result<T>) -> Void,
-                           completionHandler: @escaping (Data) -> Swift.Void) {
-        createDataTask(method: method) { [unowned self] (data, _, error) in
+                           completionHandler: @escaping (Data) -> Swift.Void) -> URLSessionTask? {
+        return createDataTask(method: method) { [unowned self] (data, _, error) in
             self.handleResponse(data: data, error: error, completion: completion, completionHandler: completionHandler)
         }
     }
     
     func createDataTask(method: RestApiMethod,
-                        completionHandler: @escaping (Data?, URLResponse?, Error?) -> Swift.Void) {
+                        completionHandler: @escaping (Data?, URLResponse?, Error?) -> Swift.Void) -> URLSessionTask? {
         guard let request = request(method: method) else {
             completionHandler(nil, nil, self.errorType.unknown)
-            return
+            return nil
         }
         
-        let dataTask = URLSession.shared.dataTask(with: request) { [unowned self] (data, urlResponse, error) in
+        let dataTask = urlSession.dataTask(with: request) { [unowned self] (data, urlResponse, error) in
             /// Print response
             self.printDataResponse(urlResponse, request: request, data: data)
+            
             /// Completion Handler
             completionHandler(data, urlResponse, error)
+            
+            /// clearURLSessionTask
+            self.clearURLSessionTask()
         }
         dataTask.resume()
+        
+        appendURLSessionTask(dataTask)
+        
+        return dataTask
     }
 }
 
@@ -168,8 +195,8 @@ private extension URLSessionRestApiManager {
 private extension URLSessionRestApiManager {
     func createMultipartDataTask<T: Associated>(multipartData: MultipartData,
                                                 method: RestApiMethod,
-                                                completion: @escaping (_ result: Result<T>) -> Void) {
-        createMultipartDataTask(multipartData: multipartData, method: method, completion: completion) { [unowned self] (data) in
+                                                completion: @escaping (_ result: Result<T>) -> Void) -> URLSessionTask? {
+        return createMultipartDataTask(multipartData: multipartData, method: method, completion: completion) { [unowned self] (data) in
             self.decode(data: data, keyPath: method.data.keyPath, completion: completion)
         }
     }
@@ -177,27 +204,50 @@ private extension URLSessionRestApiManager {
     func createMultipartDataTask<T>(multipartData: MultipartData,
                                     method: RestApiMethod,
                                     completion: @escaping (_ result: Result<T>) -> Void,
-                                    completionHandler: @escaping (Data) -> Swift.Void) {
-        createMultipartDataTask(multipartData: multipartData, method: method) { [unowned self] (data, _, error) in
+                                    completionHandler: @escaping (Data) -> Swift.Void) -> URLSessionTask? {
+        return createMultipartDataTask(multipartData: multipartData, method: method) { [unowned self] (data, _, error) in
             self.handleResponse(data: data, error: error, completion: completion, completionHandler: completionHandler)
         }
     }
     
     func createMultipartDataTask(multipartData: MultipartData,
                                  method: RestApiMethod,
-                                 completionHandler: @escaping (Data?, URLResponse?, Error?) -> Swift.Void) {
+                                 completionHandler: @escaping (Data?, URLResponse?, Error?) -> Swift.Void) -> URLSessionTask? {
         guard let request = request(method: method) else {
             completionHandler(nil, nil, self.errorType.unknown)
-            return
+            return nil
         }
         
-        let dataTask = URLSession.shared.uploadTask(with: request, from: multipartData.data) { [unowned self] (data, urlResponse, error) in
+        let dataTask = urlSession.uploadTask(with: request, from: multipartData.data) { [unowned self] (data, urlResponse, error) in
             /// Print response
             self.printDataResponse(urlResponse, request: request, data: data)
+            
             /// Completion Handler
             completionHandler(data, urlResponse, error)
+            
+            /// clearURLSessionTask
+            self.clearURLSessionTask()
         }
         dataTask.resume()
+        
+        appendURLSessionTask(dataTask)
+        
+        return dataTask
+    }
+}
+
+// MARK: - Work URLSessionTask
+private extension URLSessionRestApiManager {
+    func appendURLSessionTask(_ dataTask: URLSessionTask) {
+        currentURLSessionTasks.append(dataTask)
+    }
+    
+    func clearURLSessionTask() {
+        for (index, currentDataTask) in currentURLSessionTasks.enumerated() {
+            if currentDataTask.state == .canceling || currentDataTask.state == .completed {
+                currentURLSessionTasks.remove(at: index)
+            }
+        }
     }
 }
 

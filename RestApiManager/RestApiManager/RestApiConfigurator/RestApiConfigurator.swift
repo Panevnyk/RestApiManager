@@ -22,4 +22,6 @@ public class RestApiConfigurator {
     public var restApiManager: RestApiManager = URLSessionRestApiManager()
     /// JSONDecoder
     public var jsonDecoder = JSONDecoder()
+    /// URLSession
+    public var urlSession = URLSession.shared
 }

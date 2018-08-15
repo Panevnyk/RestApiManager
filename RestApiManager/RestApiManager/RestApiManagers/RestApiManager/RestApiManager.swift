@@ -20,28 +20,36 @@ public protocol RestApiManager {
     /// - Parameters:
     ///   - method: RestApiMethod
     ///   - completion: Result<T>
-    func call<T: Associated>(method: RestApiMethod, completion: @escaping (_ result: Result<T>) -> Void)
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    func call<T: Associated>(method: RestApiMethod, completion: @escaping (_ result: Result<T>) -> Void) -> URLSessionTask?
     
     /// Array call
     ///
     /// - Parameters:
     ///   - method: RestApiMethod
     ///   - completion: Result<[T]>
-    func call<T: Associated>(method: RestApiMethod, completion: @escaping (_ result: Result<[T]>) -> Void)
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    func call<T: Associated>(method: RestApiMethod, completion: @escaping (_ result: Result<[T]>) -> Void) -> URLSessionTask?
     
     /// String call
     ///
     /// - Parameters:
     ///   - method: RestApiMethod
     ///   - completion: Result<String>
-    func call(method: RestApiMethod, completion: @escaping (_ result: Result<String>) -> Void)
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    func call(method: RestApiMethod, completion: @escaping (_ result: Result<String>) -> Void) -> URLSessionTask?
     
     /// Custom response serializer call
     ///
     /// - Parameters:
     ///   - method: RestApiMethod
     ///   - responseSerializer: T where T: ResponseSerializer
-    func call<T: ResponseSerializer>(method: RestApiMethod, responseSerializer: T)
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    func call<T: ResponseSerializer>(method: RestApiMethod, responseSerializer: T) -> URLSessionTask?
     
     // ---------------------------------------------------------------------
     // MARK: - Multipart
@@ -53,7 +61,9 @@ public protocol RestApiManager {
     ///   - multipartData: MultipartData
     ///   - method: RestApiMethod
     ///   - completion: Result<T>
-    func call<T: Associated>(multipartData: MultipartData, method: RestApiMethod, completion: @escaping (_ result: Result<T>) -> Void)
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    func call<T: Associated>(multipartData: MultipartData, method: RestApiMethod, completion: @escaping (_ result: Result<T>) -> Void) -> URLSessionTask?
     
     /// Multipart Array call
     ///
@@ -61,7 +71,9 @@ public protocol RestApiManager {
     ///   - multipartData: MultipartData
     ///   - method: RestApiMethod
     ///   - completion: Result<[T]>
-    func call<T: Associated>(multipartData: MultipartData, method: RestApiMethod, completion: @escaping (_ result: Result<[T]>) -> Void)
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    func call<T: Associated>(multipartData: MultipartData, method: RestApiMethod, completion: @escaping (_ result: Result<[T]>) -> Void) -> URLSessionTask?
     
     /// Multipart String call
     ///
@@ -69,7 +81,9 @@ public protocol RestApiManager {
     ///   - multipartData: MultipartData
     ///   - method: RestApiMethod
     ///   - completion: Result<String>
-    func call(multipartData: MultipartData, method: RestApiMethod, completion: @escaping (_ result: Result<String>) -> Void)
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    func call(multipartData: MultipartData, method: RestApiMethod, completion: @escaping (_ result: Result<String>) -> Void) -> URLSessionTask?
     
     /// Multipart Custom response serializer call
     ///
@@ -77,5 +91,7 @@ public protocol RestApiManager {
     ///   - multipartData: MultipartData
     ///   - method: RestApiMethod
     ///   - responseSerializer: T where T: ResponseSerializer
-    func call<T: ResponseSerializer>(multipartData: MultipartData, method: RestApiMethod, responseSerializer: T)
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    func call<T: ResponseSerializer>(multipartData: MultipartData, method: RestApiMethod, responseSerializer: T) -> URLSessionTask?
 }
