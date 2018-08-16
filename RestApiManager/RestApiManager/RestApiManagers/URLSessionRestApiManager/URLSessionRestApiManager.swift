@@ -243,9 +243,11 @@ private extension URLSessionRestApiManager {
     }
     
     func clearURLSessionTask() {
+        var offset = 0
         for (index, currentDataTask) in currentURLSessionTasks.enumerated() {
             if currentDataTask.state == .canceling || currentDataTask.state == .completed {
-                currentURLSessionTasks.remove(at: index)
+                currentURLSessionTasks.remove(at: index - offset)
+                offset += 1
             }
         }
     }
