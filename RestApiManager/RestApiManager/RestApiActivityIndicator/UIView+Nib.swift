@@ -89,11 +89,11 @@ public extension UIView {
         superview.addSubview(self)
         let views = ["view": self]
         superview.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
-                                                                options: NSLayoutFormatOptions(rawValue: 0),
+                                                                options: NSLayoutConstraint.FormatOptions(rawValue: 0),
                                                                 metrics: nil,
                                                                 views: views))
         superview.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|",
-                                                                options: NSLayoutFormatOptions(rawValue: 0),
+                                                                options: NSLayoutConstraint.FormatOptions(rawValue: 0),
                                                                 metrics: nil,
                                                                 views: views))
     }
