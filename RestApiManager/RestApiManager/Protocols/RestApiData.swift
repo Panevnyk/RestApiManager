@@ -10,11 +10,11 @@ import Foundation
 
 /// RestApiData
 public struct RestApiData {
-    var url: String
-    var httpMethod: HttpMethod
-    var headers: [String: String]?
-    var parameters: Any
-    var keyPath: String?
+    public var url: String
+    public var httpMethod: HttpMethod
+    public var headers: [String: String]?
+    public var parameters: Any
+    public var keyPath: String?
     
     public init(url: String,
                 httpMethod: HttpMethod,
@@ -29,7 +29,8 @@ public struct RestApiData {
     }
 }
 
-extension RestApiData {
+// MARK: - url with parameters String for GET request
+public extension RestApiData {
     var urlWithParametersString: String {
         guard let parameters = parameters as? [String: Any] else {
             return url

@@ -17,10 +17,10 @@ public protocol MultipartData {
 
 /// MultipartObject
 public struct MultipartObject {
-    var key: String
-    var data: Data
-    var mimeType: String
-    var filename: String
+    public var key: String
+    public var data: Data
+    public var mimeType: String
+    public var filename: String
     
     public init(key: String,
                 data: Data,

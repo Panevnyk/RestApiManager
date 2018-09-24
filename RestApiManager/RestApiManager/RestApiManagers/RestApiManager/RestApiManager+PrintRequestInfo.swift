@@ -14,7 +14,7 @@ extension RestApiManager {
         return RestApiConfigurator.shared.printRequestInfo
     }
     
-    func printDataResponse(_ dataResponse: URLResponse?, request: URLRequest?, data: Data?) {
+    public func printDataResponse(_ dataResponse: URLResponse?, request: URLRequest?, data: Data?) {
         #if DEBUG
         if printRequestInfo {
             if let urlDataResponse = dataResponse as? HTTPURLResponse {
