@@ -1,3 +1,7 @@
+  <p align="center">  
+  <img src="https://github.com/Panevnyk/RestApiManager/blob/master/Images/satellite-dish.png?raw=true" width="180"> 
+  </p>
+  
 # RestApiManager
 
 RestApiManager lib created for helping you create network request and automatically map response.
@@ -18,4 +22,3 @@ import the framework with `import RestApiManager`.
 ## License
 
 SwipeVC is released under an MIT license. See [License.txt](License.txt) for more information.
-
