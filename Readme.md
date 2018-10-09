@@ -21,4 +21,4 @@ import the framework with `import RestApiManager`.
 
 ## License
 
-SwipeVC is released under an MIT license. See [License.txt](License.txt) for more information.
+RestApiManager is released under an MIT license. See [License.txt](License.txt) for more information.
