@@ -21,7 +21,7 @@ public class DefaultRestApiError: RestApiError {
     /// - Parameters:
     ///   - error: Error?
     ///   - data: Data?
-    public static func handle(error: Error?, data: Data?) -> RestApiError? {
+    public static func handle(error: Error?, data: Data?) -> Self? {
         return nil
     }
     

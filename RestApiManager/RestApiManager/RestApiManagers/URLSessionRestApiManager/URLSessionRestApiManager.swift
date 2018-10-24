@@ -12,15 +12,43 @@ import Foundation
 public typealias Associated = Decodable
 
 // MARK: - URLSessionRestApiManager
-open class URLSessionRestApiManager: RestApiManager {
+open class URLSessionRestApiManager<E>: RestApiManager where E: RestApiError {
 
+    // ---------------------------------------------------------------------
+    // MARK: - Properties
+    // ---------------------------------------------------------------------
+    
+    /// RestApiManagerDIFabric
+    public var restApiManagerDIFabric: RestApiManagerDIFabric {
+        return urlSessionRestApiManagerDIFabric
+    }
+    
+    /// URLSessionRestApiManagerDIFabric
+    let urlSessionRestApiManagerDIFabric: URLSessionRestApiManagerDIFabric<E>
+    
     /// Current URLSessionTask
     public var currentURLSessionTasks: [URLSessionTask] = []
     
     // ---------------------------------------------------------------------
-    // MARK: - Simple requests
+    // MARK: - Inits
     // ---------------------------------------------------------------------
     
+    /// Init with URLSessionRestApiManager properties
+    ///
+    /// - Parameter urlSessionRestApiManagerDIFabric: URLSessionRestApiManagerDIFabric
+    public init(urlSessionRestApiManagerDIFabric: URLSessionRestApiManagerDIFabric<E>) {
+        self.urlSessionRestApiManagerDIFabric = urlSessionRestApiManagerDIFabric
+    }
+    
+    /// Init with default URLSessionRestApiManager properties
+    public init() {
+        urlSessionRestApiManagerDIFabric =
+            URLSessionRestApiManagerDIFabric(errorType: DefaultRestApiError.self) as! URLSessionRestApiManagerDIFabric<E>
+    }
+}
+
+// MARK: - Simple requests
+extension URLSessionRestApiManager {
     /// Object call
     ///
     /// - Parameters:
@@ -51,11 +79,11 @@ open class URLSessionRestApiManager: RestApiManager {
     /// - Returns: URLSessionTask?
     @discardableResult
     public func call(method: RestApiMethod, completion: @escaping (_ result: Result<String>) -> Void) -> URLSessionTask? {
-        return createDataTask(method: method, completion: completion) { [unowned self] (data) in
+        return createDataTask(method: method, completion: completion) { (data) in
             if let value = String(data: data, encoding: .utf8) {
                 completion(.success(value))
             } else {
-                completion(.failure(self.errorType.unknown))
+                completion(.failure(E.unknown))
             }
         }
     }
@@ -74,11 +102,10 @@ open class URLSessionRestApiManager: RestApiManager {
             })
         }
     }
-    
-    // ---------------------------------------------------------------------
-    // MARK: - Multipart
-    // ---------------------------------------------------------------------
-    
+}
+
+// MARK: - Multipart
+extension URLSessionRestApiManager {
     /// Multipart Object call
     ///
     /// - Parameters:
@@ -118,11 +145,11 @@ open class URLSessionRestApiManager: RestApiManager {
     public func call(multipartData: MultipartData,
                      method: RestApiMethod,
                      completion: @escaping (_ result: Result<String>) -> Void) -> URLSessionTask? {
-        return createMultipartDataTask(multipartData: multipartData, method: method, completion: completion) { [unowned self] (data) in
+        return createMultipartDataTask(multipartData: multipartData, method: method, completion: completion) { (data) in
             if let value = String(data: data, encoding: .utf8) {
                 completion(.success(value))
             } else {
-                completion(.failure(self.errorType.unknown))
+                completion(.failure(E.unknown))
             }
         }
     }
@@ -144,9 +171,6 @@ open class URLSessionRestApiManager: RestApiManager {
             })
         }
     }
-    
-    /// Init
-    public init() {}
 }
 
 // MARK: - DataTask
@@ -169,11 +193,14 @@ private extension URLSessionRestApiManager {
     func createDataTask(method: RestApiMethod,
                         completionHandler: @escaping (Data?, URLResponse?, Error?) -> Swift.Void) -> URLSessionTask? {
         guard let request = request(method: method) else {
-            completionHandler(nil, nil, self.errorType.unknown)
+            completionHandler(nil, nil, E.unknown)
             return nil
         }
         
-        let dataTask = urlSession.dataTask(with: request) { [unowned self] (data, urlResponse, error) in
+        let dataTask = urlSessionRestApiManagerDIFabric
+            .urlSession
+            .dataTask(with: request) { [unowned self] (data, urlResponse, error) in
+                
             /// Print response
             self.printDataResponse(urlResponse, request: request, data: data)
             
@@ -214,11 +241,14 @@ private extension URLSessionRestApiManager {
                                  method: RestApiMethod,
                                  completionHandler: @escaping (Data?, URLResponse?, Error?) -> Swift.Void) -> URLSessionTask? {
         guard let request = request(method: method) else {
-            completionHandler(nil, nil, self.errorType.unknown)
+            completionHandler(nil, nil, E.unknown)
             return nil
         }
         
-        let dataTask = urlSession.uploadTask(with: request, from: multipartData.data) { [unowned self] (data, urlResponse, error) in
+        let dataTask = urlSessionRestApiManagerDIFabric
+            .urlSession
+            .uploadTask(with: request, from: multipartData.data) { [unowned self] (data, urlResponse, error) in
+                
             /// Print response
             self.printDataResponse(urlResponse, request: request, data: data)
             
@@ -259,10 +289,12 @@ private extension URLSessionRestApiManager {
                                keyPath: String?,
                                completion: @escaping (_ result: Result<T>) -> Void) {
         do {
-            let object = try jsonDecoder.decode(T.self, from: data, keyPath: keyPath)
+            let object = try urlSessionRestApiManagerDIFabric
+                .jsonDecoder
+                .decode(T.self, from: data, keyPath: keyPath)
             completion(.success(object))
         } catch let error {
-            completion(.failure(errorType.init(error: error)))
+            completion(.failure(E.init(error: error)))
         }
     }
     
@@ -272,12 +304,12 @@ private extension URLSessionRestApiManager {
                            completionHandler: @escaping (Data) -> Swift.Void) {
         
         /// Handle custom error
-        if let error = errorType.handle(error: error, data: data) {
+        if let error = E.handle(error: error, data: data) {
             completion(.failure(error))
         }
         /// Handle Error
         else if let error = error {
-            completion(.failure(errorType.init(error: error)))
+            completion(.failure(E.init(error: error)))
         }
         /// Handle Data
         else if let data = data {
@@ -285,7 +317,16 @@ private extension URLSessionRestApiManager {
         }
         /// Handle unknown result
         else {
-            completion(.failure(errorType.unknown))
+            completion(.failure(E.unknown))
+        }
+    }
+    
+    // FIXME: - FIXME TEST CODE
+    class Rest: RestApiMethod {
+        var data: RestApiData
+        
+        init(){
+            data = RestApiData(url: "", httpMethod: .get)
         }
     }
     
@@ -294,13 +335,20 @@ private extension URLSessionRestApiManager {
                                                                responseSerializer: T,
                                                                completionHandler: @escaping (Data) -> Swift.Void) {
         
+        let fabric = URLSessionRestApiManagerDIFabric(errorType: DefaultRestApiError.self, printRequestInfo: false)
+        let restApiManager: RestApiManager = URLSessionRestApiManager<DefaultRestApiError>(urlSessionRestApiManagerDIFabric: fabric)
+        restApiManager.call(method: Rest()) { (result: Result<String>) in
+            
+        }
+        
+        
         /// Handle custom error
-        if let error = errorType.handle(error: error, data: data) {
+        if let error = E.handle(error: error, data: data) {
             responseSerializer.completion(.failure(error))
         }
         /// Handle Error
         else if let error = error {
-            responseSerializer.completion(.failure(errorType.init(error: error)))
+            responseSerializer.completion(.failure(E.init(error: error)))
         }
         /// Handle Data
         else if let data = data {
@@ -308,7 +356,7 @@ private extension URLSessionRestApiManager {
         }
         /// Handle unknown result
         else {
-            responseSerializer.completion(.failure(errorType.unknown))
+            responseSerializer.completion(.failure(E.unknown))
         }
     }
 }

@@ -10,13 +10,9 @@ import Foundation
 
 // MARK: - Show request and responce info
 extension RestApiManager {
-    var printRequestInfo: Bool {
-        return RestApiConfigurator.shared.printRequestInfo
-    }
-    
     public func printDataResponse(_ dataResponse: URLResponse?, request: URLRequest?, data: Data?) {
         #if DEBUG
-        if printRequestInfo {
+        if restApiManagerDIFabric.printRequestInfo {
             if let urlDataResponse = dataResponse as? HTTPURLResponse {
                 let statusCode = urlDataResponse.statusCode
                 print("\n\n-------------------------------------------------------------")

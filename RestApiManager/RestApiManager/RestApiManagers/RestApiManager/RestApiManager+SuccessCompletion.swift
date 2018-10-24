@@ -8,29 +8,35 @@
 
 import Foundation
 
-// MARK: - RestApiAlert
+// MARK: Call methods with SuccessCompletion
 extension RestApiManager {
-    public var restApiAlert: RestApiAlert {
-        return RestApiConfigurator.shared.restApiAlert
-    }
-}
-
-// MARK: Call method with Success completion
-extension RestApiManager {
+    
+    // ---------------------------------------------------------------------
+    // MARK: - Simple requests
+    // ---------------------------------------------------------------------
     
     /// Object call
     ///
     /// - Parameters:
     ///   - method: RestApiMethod
-    ///   - completion: Result<T>
-    public func call<T: Associated>(method: RestApiMethod, indicator: Bool = false, successCompletion: @escaping (_ result: T) -> Void) {
-        call(method: method, indicator: indicator) { (result: Result<T>) in
-            switch result {
-            case .success(let obj):
-                successCompletion(obj)
-            case .failure(let error):
-                self.restApiAlert.show(error: error)
-            }
+    ///   - indicator: Bool = false
+    ///   - errorAlert: Bool = false
+    ///   - successCompletion: T
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    public func call<T: Associated>(method: RestApiMethod,
+                                    indicator: Bool = false,
+                                    errorAlert: Bool = false,
+                                    successCompletion: @escaping (_ result: T) -> Void) -> URLSessionTask? {
+        return call(method: method,
+                    indicator: indicator,
+                    errorAlert: errorAlert) { (result: Result<T>) in
+                        switch result {
+                        case .success(let obj):
+                            successCompletion(obj)
+                        default:
+                            break
+                        }
         }
     }
     
@@ -38,39 +44,24 @@ extension RestApiManager {
     ///
     /// - Parameters:
     ///   - method: RestApiMethod
-    ///   - completion: Result<[T]>
-    ///
-    /// - Parameters:
-    ///   - method: RestApiMethod
-    ///   - completion: Result<T>
-    public func call<T: Associated>(method: RestApiMethod, indicator: Bool = false, successCompletion: @escaping (_ result: [T]) -> Void) {
-        call(method: method, indicator: indicator) { (result: Result<[T]>) in
-            switch result {
-            case .success(let obj):
-                successCompletion(obj)
-            case .failure(let error):
-                self.restApiAlert.show(error: error)
-            }
-        }
-    }
-    
-    /// Multipart call
-    ///
-    /// - Parameters:
-    ///   - multipartData: MultipartData
-    ///   - method: RestApiMethod
-    ///   - completion: Result<T>
-    public func call<T: Associated>(multipartData: MultipartData,
-                                    method: RestApiMethod,
+    ///   - indicator: Bool = false
+    ///   - errorAlert: Bool = false
+    ///   - successCompletion: [T]
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    public func call<T: Associated>(method: RestApiMethod,
                                     indicator: Bool = false,
-                                    successCompletion: @escaping (_ result: T) -> Void) {
-        call(multipartData: multipartData, method: method, indicator: indicator) { (result: Result<T>) in
-            switch result {
-            case .success(let obj):
-                successCompletion(obj)
-            case .failure(let error):
-                self.restApiAlert.show(error: error)
-            }
+                                    errorAlert: Bool = false,
+                                    successCompletion: @escaping (_ result: [T]) -> Void) -> URLSessionTask? {
+        return call(method: method,
+                    indicator: indicator,
+                    errorAlert: errorAlert) { (result: Result<[T]>) in
+                        switch result {
+                        case .success(let obj):
+                            successCompletion(obj)
+                        default:
+                            break
+                        }
         }
     }
     
@@ -78,15 +69,112 @@ extension RestApiManager {
     ///
     /// - Parameters:
     ///   - method: RestApiMethod
-    ///   - completion: Result<String>
-    public func call(method: RestApiMethod, indicator: Bool = false, successCompletion: @escaping (_ result: String) -> Void) {
-        call(method: method, indicator: indicator) { (result: Result<String>) in
-            switch result {
-            case .success(let obj):
-                successCompletion(obj)
-            case .failure(let error):
-                self.restApiAlert.show(error: error)
-            }
+    ///   - indicator: Bool = false
+    ///   - errorAlert: Bool = false
+    ///   - successCompletion: String
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    public func call(method: RestApiMethod,
+                     indicator: Bool = false,
+                     errorAlert: Bool = false,
+                     successCompletion: @escaping (_ result: String) -> Void) -> URLSessionTask? {
+        return call(method: method,
+                    indicator: indicator,
+                    errorAlert: errorAlert) { (result: Result<String>) in
+                        switch result {
+                        case .success(let obj):
+                            successCompletion(obj)
+                        default:
+                            break
+                        }
+        }
+    }
+    
+    // ---------------------------------------------------------------------
+    // MARK: - Multipart
+    // ---------------------------------------------------------------------
+    
+    /// Multipart Object call
+    ///
+    /// - Parameters:
+    ///   - multipartData: MultipartData
+    ///   - method: RestApiMethod
+    ///   - indicator: Bool = false
+    ///   - errorAlert: Bool = false
+    ///   - successCompletion: T
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    public func call<T: Associated>(multipartData: MultipartData,
+                                    method: RestApiMethod,
+                                    indicator: Bool = false,
+                                    errorAlert: Bool = false,
+                                    successCompletion: @escaping (_ result: T) -> Void) -> URLSessionTask? {
+        return call(multipartData: multipartData,
+                    method: method,
+                    indicator: indicator,
+                    errorAlert: errorAlert) { (result: Result<T>) in
+                        switch result {
+                        case .success(let obj):
+                            successCompletion(obj)
+                        default:
+                            break
+                        }
+        }
+    }
+    
+    /// Multipart Array call
+    ///
+    /// - Parameters:
+    ///   - multipartData: MultipartData
+    ///   - method: RestApiMethod
+    ///   - indicator: Bool = false
+    ///   - errorAlert: Bool = false
+    ///   - successCompletion: [T]
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    public func call<T: Associated>(multipartData: MultipartData,
+                                    method: RestApiMethod,
+                                    indicator: Bool = false,
+                                    errorAlert: Bool = false,
+                                    successCompletion: @escaping (_ result: [T]) -> Void) -> URLSessionTask? {
+        return call(multipartData: multipartData,
+                    method: method,
+                    indicator: indicator,
+                    errorAlert: errorAlert) { (result: Result<[T]>) in
+                        switch result {
+                        case .success(let obj):
+                            successCompletion(obj)
+                        default:
+                            break
+                        }
+        }
+    }
+    
+    /// Multipart String call
+    ///
+    /// - Parameters:
+    ///   - multipartData: MultipartData
+    ///   - method: RestApiMethod
+    ///   - indicator: Bool = false
+    ///   - errorAlert: Bool = false
+    ///   - successCompletion: String
+    /// - Returns: URLSessionTask?
+    @discardableResult
+    public func call(multipartData: MultipartData,
+                     method: RestApiMethod,
+                     indicator: Bool = false,
+                     errorAlert: Bool = false,
+                     successCompletion: @escaping (_ result: String) -> Void) -> URLSessionTask? {
+        return call(multipartData: multipartData,
+                    method: method,
+                    indicator: indicator,
+                    errorAlert: errorAlert) { (result: Result<String>) in
+                        switch result {
+                        case .success(let obj):
+                            successCompletion(obj)
+                        default:
+                            break
+                        }
         }
     }
 }

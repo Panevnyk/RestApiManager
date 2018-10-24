@@ -13,6 +13,9 @@ public class DefaultRestApiActivityIndicator: RestApiActivityIndicator {
     /// RestApiActivityIndicatorView
     private weak var activityIndicatorView: RestApiActivityIndicatorView?
     
+    /// Init
+    public init() {}
+    
     /// show
     public func show() {
         DispatchQueue.main.async { [unowned self] in
