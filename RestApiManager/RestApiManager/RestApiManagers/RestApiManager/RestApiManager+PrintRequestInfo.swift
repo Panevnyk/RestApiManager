@@ -12,7 +12,7 @@ import Foundation
 extension RestApiManager {
     public func printDataResponse(_ dataResponse: URLResponse?, request: URLRequest?, data: Data?) {
         #if DEBUG
-        if restApiManagerDIFabric.printRequestInfo {
+        if restApiManagerDIContainer.printRequestInfo {
             if let urlDataResponse = dataResponse as? HTTPURLResponse {
                 let statusCode = urlDataResponse.statusCode
                 print("\n\n-------------------------------------------------------------")
@@ -25,19 +25,35 @@ extension RestApiManager {
                 }
                 if let httpBody = request.httpBody {
                     do {
-                        print("\tParameters: \(try JSONSerialization.jsonObject(with: httpBody, options: .allowFragments))")
-                    } catch let error {
+                        let tmpDictData = try JSONSerialization.jsonObject(with: httpBody, options: .allowFragments)
+                        let dictData = ["Parameters": tmpDictData]
+                        
+                        let data = try JSONSerialization.data(withJSONObject: dictData, options: .prettyPrinted)
+                        
+                        if let responceString = String.init(data: data, encoding: .utf8) {
+                            print("\t\(responceString)")
+                        } else {
+                            print("\tParameters: No Parameters")
+                        }
+                    } catch {
                         print("\tParameters: Throw error: \(error)")
                     }
                 }
             }
             do {
                 if let data = data {
-                    print("\nRESPONSE:\n\(try JSONSerialization.jsonObject(with: data, options: .allowFragments))")
+                    let dictData = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    let serializedData = try JSONSerialization.data(withJSONObject: dictData, options: .prettyPrinted)
+                    if let responceString = String(data: serializedData, encoding: .utf8) {
+                        print("\nRESPONSE:\n\(responceString)")
+                    } else {
+                        print("\nRESPONSE:\n\tCan't create string from data")
+                    }
                 } else {
                     print("\nRESPONSE:\n\tNo Data")
                 }
-            } catch let error {
+                
+            } catch {
                 print("\nRESPONSE:\n\tThrow error: \(error)")
             }
             print("-------------------------------------------------------------\n\n")
@@ -45,4 +61,3 @@ extension RestApiManager {
         #endif
     }
 }
-

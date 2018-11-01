@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D10C95A9218B477A00D656BE /* URLSessionRestApiManager+DataTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10C95A8218B477A00D656BE /* URLSessionRestApiManager+DataTask.swift */; };
+		D10C95AB218B47EF00D656BE /* URLSessionRestApiManager+Responce.swift in Sources */ = {isa = PBXBuildFile; fileRef = D10C95AA218B47EF00D656BE /* URLSessionRestApiManager+Responce.swift */; };
 		D128BCC920468F8F004E0917 /* RestApiManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D128BCC720468F8F004E0917 /* RestApiManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D128BCF720469039004E0917 /* RestApiDetailAnimable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D128BCD120469039004E0917 /* RestApiDetailAnimable.swift */; };
 		D128BCF820469039004E0917 /* RestApiActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D128BCD220469039004E0917 /* RestApiActivityIndicatorView.swift */; };
@@ -21,7 +23,7 @@
 		D128BD0320469039004E0917 /* UIApplication+ViewControllerForPresent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D128BCE020469039004E0917 /* UIApplication+ViewControllerForPresent.swift */; };
 		D128BD0420469039004E0917 /* RestApiAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D128BCE220469039004E0917 /* RestApiAlert.swift */; };
 		D128BD0520469039004E0917 /* DefaultRestApiAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D128BCE320469039004E0917 /* DefaultRestApiAlert.swift */; };
-		D128BD0620469039004E0917 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = D128BCE520469039004E0917 /* Result.swift */; };
+		D128BD0620469039004E0917 /* Results.swift in Sources */ = {isa = PBXBuildFile; fileRef = D128BCE520469039004E0917 /* Results.swift */; };
 		D128BD0720469039004E0917 /* RestApiMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = D128BCE620469039004E0917 /* RestApiMethod.swift */; };
 		D128BD0820469039004E0917 /* ParametersProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D128BCE720469039004E0917 /* ParametersProtocol.swift */; };
 		D128BD0920469039004E0917 /* ResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D128BCE820469039004E0917 /* ResponseSerializer.swift */; };
@@ -35,11 +37,13 @@
 		D128BD1220469039004E0917 /* RestApiManager+SuccessCompletion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D128BCF520469039004E0917 /* RestApiManager+SuccessCompletion.swift */; };
 		D128BD1320469039004E0917 /* RestApiManager+IndicatorAndErrorAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D128BCF620469039004E0917 /* RestApiManager+IndicatorAndErrorAlert.swift */; };
 		D18621062049D08400660379 /* JSONDecoder+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18621052049D08400660379 /* JSONDecoder+KeyPath.swift */; };
-		D1A9210E217A2DF800FFC269 /* URLSessionRestApiManagerDIFabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A9210D217A2DF800FFC269 /* URLSessionRestApiManagerDIFabric.swift */; };
-		D1A92110217A353B00FFC269 /* RestApiManagerDIFabric.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A9210F217A353B00FFC269 /* RestApiManagerDIFabric.swift */; };
+		D1A9210E217A2DF800FFC269 /* URLSessionRestApiManagerDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A9210D217A2DF800FFC269 /* URLSessionRestApiManagerDIContainer.swift */; };
+		D1A92110217A353B00FFC269 /* RestApiManagerDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A9210F217A353B00FFC269 /* RestApiManagerDIContainer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D10C95A8218B477A00D656BE /* URLSessionRestApiManager+DataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSessionRestApiManager+DataTask.swift"; sourceTree = "<group>"; };
+		D10C95AA218B47EF00D656BE /* URLSessionRestApiManager+Responce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSessionRestApiManager+Responce.swift"; sourceTree = "<group>"; };
 		D128BCC420468F8F004E0917 /* RestApiManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RestApiManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D128BCC720468F8F004E0917 /* RestApiManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RestApiManager.h; sourceTree = "<group>"; };
 		D128BCC820468F8F004E0917 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,7 +60,7 @@
 		D128BCE020469039004E0917 /* UIApplication+ViewControllerForPresent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+ViewControllerForPresent.swift"; sourceTree = "<group>"; };
 		D128BCE220469039004E0917 /* RestApiAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestApiAlert.swift; sourceTree = "<group>"; };
 		D128BCE320469039004E0917 /* DefaultRestApiAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultRestApiAlert.swift; sourceTree = "<group>"; };
-		D128BCE520469039004E0917 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		D128BCE520469039004E0917 /* Results.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Results.swift; sourceTree = "<group>"; };
 		D128BCE620469039004E0917 /* RestApiMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestApiMethod.swift; sourceTree = "<group>"; };
 		D128BCE720469039004E0917 /* ParametersProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParametersProtocol.swift; sourceTree = "<group>"; };
 		D128BCE820469039004E0917 /* ResponseSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseSerializer.swift; sourceTree = "<group>"; };
@@ -70,8 +74,8 @@
 		D128BCF520469039004E0917 /* RestApiManager+SuccessCompletion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestApiManager+SuccessCompletion.swift"; sourceTree = "<group>"; };
 		D128BCF620469039004E0917 /* RestApiManager+IndicatorAndErrorAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RestApiManager+IndicatorAndErrorAlert.swift"; sourceTree = "<group>"; };
 		D18621052049D08400660379 /* JSONDecoder+KeyPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "JSONDecoder+KeyPath.swift"; sourceTree = "<group>"; };
-		D1A9210D217A2DF800FFC269 /* URLSessionRestApiManagerDIFabric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionRestApiManagerDIFabric.swift; sourceTree = "<group>"; };
-		D1A9210F217A353B00FFC269 /* RestApiManagerDIFabric.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestApiManagerDIFabric.swift; sourceTree = "<group>"; };
+		D1A9210D217A2DF800FFC269 /* URLSessionRestApiManagerDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionRestApiManagerDIContainer.swift; sourceTree = "<group>"; };
+		D1A9210F217A353B00FFC269 /* RestApiManagerDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestApiManagerDIContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,13 +173,13 @@
 		D128BCE420469039004E0917 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				D128BCE520469039004E0917 /* Result.swift */,
+				D128BCE520469039004E0917 /* Results.swift */,
 				D128BCE620469039004E0917 /* RestApiMethod.swift */,
 				D128BCE720469039004E0917 /* ParametersProtocol.swift */,
 				D128BCE820469039004E0917 /* ResponseSerializer.swift */,
 				D128BCE920469039004E0917 /* MultipartData.swift */,
 				D128BCEA20469039004E0917 /* RestApiData.swift */,
-				D1A9210F217A353B00FFC269 /* RestApiManagerDIFabric.swift */,
+				D1A9210F217A353B00FFC269 /* RestApiManagerDIContainer.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -193,7 +197,9 @@
 			isa = PBXGroup;
 			children = (
 				D128BCEF20469039004E0917 /* URLSessionRestApiManager.swift */,
-				D1A9210D217A2DF800FFC269 /* URLSessionRestApiManagerDIFabric.swift */,
+				D10C95A8218B477A00D656BE /* URLSessionRestApiManager+DataTask.swift */,
+				D10C95AA218B47EF00D656BE /* URLSessionRestApiManager+Responce.swift */,
+				D1A9210D217A2DF800FFC269 /* URLSessionRestApiManagerDIContainer.swift */,
 			);
 			path = URLSessionRestApiManager;
 			sourceTree = "<group>";
@@ -301,8 +307,9 @@
 				D128BD0220469039004E0917 /* URLRequest+Utils.swift in Sources */,
 				D128BD0B20469039004E0917 /* RestApiData.swift in Sources */,
 				D128BCFF20469039004E0917 /* DefaultRestApiError.swift in Sources */,
-				D1A9210E217A2DF800FFC269 /* URLSessionRestApiManagerDIFabric.swift in Sources */,
-				D128BD0620469039004E0917 /* Result.swift in Sources */,
+				D1A9210E217A2DF800FFC269 /* URLSessionRestApiManagerDIContainer.swift in Sources */,
+				D128BD0620469039004E0917 /* Results.swift in Sources */,
+				D10C95A9218B477A00D656BE /* URLSessionRestApiManager+DataTask.swift in Sources */,
 				D128BD0E20469039004E0917 /* RestApiManager+Properties.swift in Sources */,
 				D128BD0720469039004E0917 /* RestApiMethod.swift in Sources */,
 				D128BD0820469039004E0917 /* ParametersProtocol.swift in Sources */,
@@ -310,7 +317,7 @@
 				D128BCF720469039004E0917 /* RestApiDetailAnimable.swift in Sources */,
 				D128BD0A20469039004E0917 /* MultipartData.swift in Sources */,
 				D128BCFC20469039004E0917 /* UIView+Nib.swift in Sources */,
-				D1A92110217A353B00FFC269 /* RestApiManagerDIFabric.swift in Sources */,
+				D1A92110217A353B00FFC269 /* RestApiManagerDIContainer.swift in Sources */,
 				D128BCFE20469039004E0917 /* RestApiError.swift in Sources */,
 				D128BD0420469039004E0917 /* RestApiAlert.swift in Sources */,
 				D128BCFB20469039004E0917 /* RestApiActivityIndicator.swift in Sources */,
@@ -319,6 +326,7 @@
 				D128BD1220469039004E0917 /* RestApiManager+SuccessCompletion.swift in Sources */,
 				D128BD0320469039004E0917 /* UIApplication+ViewControllerForPresent.swift in Sources */,
 				D128BD0D20469039004E0917 /* URLSessionRestApiManager.swift in Sources */,
+				D10C95AB218B47EF00D656BE /* URLSessionRestApiManager+Responce.swift in Sources */,
 				D18621062049D08400660379 /* JSONDecoder+KeyPath.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

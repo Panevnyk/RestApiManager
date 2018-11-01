@@ -17,11 +17,11 @@ public enum Result<T> {
     case failure(RestApiError)
 }
 
-/// ResultWithE
+/// ResultWithET
 ///
 /// - success: <T>
-/// - failure: <E: RestApiError>
-public enum ResultWithE<T, E: RestApiError> {
+/// - failure: <ET: RestApiError>
+public enum ResultWithET<T, ET: RestApiError> {
     case success(T)
-    case failure(E)
+    case failure(ET)
 }

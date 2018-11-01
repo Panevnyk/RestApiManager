@@ -1,5 +1,5 @@
 //
-//  URLSessionRestApiManagerDIFabric.swift
+//  URLSessionRestApiManagerDIContainer.swift
 //  RestApiManager
 //
 //  Created by Panevnyk Vlad on 10/19/18.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-/// URLSessionRestApiManagerDIFabric
-public struct URLSessionRestApiManagerDIFabric<E: RestApiError>: RestApiManagerDIFabric {
+/// URLSessionRestApiManagerDIContainer
+public struct URLSessionRestApiManagerDIContainer<E: RestApiError>: RestApiManagerDIContainer {
     /// RestApiError
     public var errorType: E.Type
     /// URLSession

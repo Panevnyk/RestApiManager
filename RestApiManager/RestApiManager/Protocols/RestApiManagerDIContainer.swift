@@ -1,5 +1,5 @@
 //
-//  RestApiManagerDIFabric.swift
+//  RestApiManagerDIContainer.swift
 //  RestApiManager
 //
 //  Created by Panevnyk Vlad on 10/19/18.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-/// RestApiManagerDIFabric
-public protocol RestApiManagerDIFabric {
+/// RestApiManagerDIContainer
+public protocol RestApiManagerDIContainer {
     /// RestApiAlert
     var restApiAlert: RestApiAlert { get }
     /// RestApiActivityIndicator

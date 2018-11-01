@@ -160,7 +160,7 @@ private extension RestApiManager {
         
         switch result {
         case .failure(let error):
-            restApiManagerDIFabric.restApiAlert.show(error: error)
+            restApiManagerDIContainer.restApiAlert.show(error: error)
         default:
             break
         }
@@ -182,11 +182,11 @@ private extension RestApiManager {
 private extension RestApiManager {
     func showIndicator(_ indicator: Bool) {
         guard indicator else { return }
-        restApiManagerDIFabric.restApiActivityIndicator.show()
+        restApiManagerDIContainer.restApiActivityIndicator.show()
     }
     
     func hideIndicator(_ indicator: Bool) {
         guard indicator else { return }
-        restApiManagerDIFabric.restApiActivityIndicator.hide()
+        restApiManagerDIContainer.restApiActivityIndicator.hide()
     }
 }
