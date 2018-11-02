@@ -13,49 +13,78 @@ extension RestApiManager {
     public func printDataResponse(_ dataResponse: URLResponse?, request: URLRequest?, data: Data?) {
         #if DEBUG
         if restApiManagerDIContainer.printRequestInfo {
+            print("\n\n-------------------------------------------------------------")
             if let urlDataResponse = dataResponse as? HTTPURLResponse {
                 let statusCode = urlDataResponse.statusCode
-                print("\n\n-------------------------------------------------------------")
                 print("\(statusCode == 200 ? "SUCCESS" : "ERROR") \(statusCode)")
             }
+            
+            var responceArray: [[String: Any]] = []
+            // REQUEST
             if let request = request {
-                print("\nREQUEST:\n\t\(request)")
+                var requestArray: [[String: Any]] = []
+                
+                // URL
+                requestArray.append(["!!!<URL>!!!": request.url?.absoluteString ?? ""])
+                
+                // HEADERS
                 if let headers = request.allHTTPHeaderFields {
-                    print("\tHeaders: \(headers)")
+                    requestArray.append(["!!!<HEADERS>!!!": headers])
+                } else {
+                    requestArray.append(["!!!<HEADERS>!!!": "No Headers"])
                 }
+                
+                // PARAMETERS
                 if let httpBody = request.httpBody {
                     do {
-                        let tmpDictData = try JSONSerialization.jsonObject(with: httpBody, options: .allowFragments)
-                        let dictData = ["Parameters": tmpDictData]
-                        
-                        let data = try JSONSerialization.data(withJSONObject: dictData, options: .prettyPrinted)
-                        
-                        if let responceString = String.init(data: data, encoding: .utf8) {
-                            print("\t\(responceString)")
-                        } else {
-                            print("\tParameters: No Parameters")
-                        }
+                        let temDictData = try JSONSerialization.jsonObject(with: httpBody, options: .allowFragments)
+                        requestArray.append(["!!!<PARAMETERS>!!!": temDictData])
                     } catch {
-                        print("\tParameters: Throw error: \(error)")
-                    }
-                }
-            }
-            do {
-                if let data = data {
-                    let dictData = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                    let serializedData = try JSONSerialization.data(withJSONObject: dictData, options: .prettyPrinted)
-                    if let responceString = String(data: serializedData, encoding: .utf8) {
-                        print("\nRESPONSE:\n\(responceString)")
-                    } else {
-                        print("\nRESPONSE:\n\tCan't create string from data")
+                        requestArray.append(["!!!<PARAMETERS>!!!": "Throw error: \(error)"])
                     }
                 } else {
-                    print("\nRESPONSE:\n\tNo Data")
+                    requestArray.append(["!!!<PARAMETERS>!!!": "No Parameters"])
+                }
+                
+                responceArray.append(["!!!<REQUEST>!!!": requestArray])
+            } else {
+                responceArray.append(["!!!<REQUEST>!!!": "No Request"])
+            }
+            
+            // RESPONSE
+            do {
+                if let data = data {
+                    let temDictData = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    responceArray.append(["!!!<RESPONSE>!!!": temDictData])
+                } else {
+                    responceArray.append(["!!!<RESPONSE>!!!": "No Data"])
                 }
                 
             } catch {
-                print("\nRESPONSE:\n\tThrow error: \(error)")
+                responceArray.append(["!!!<RESPONSE>!!!": "Throw error: \(error)"])
             }
+            
+            // Print
+            do {
+                
+                let data = try JSONSerialization.data(withJSONObject: ["!!!<RESTAPIMANAGER>!!!": responceArray], options: .prettyPrinted)
+                var responceString = String.init(data: data, encoding: .utf8) ?? ""
+                responceString = responceString.replacingOccurrences(of: "\"!!!<RESTAPIMANAGER>!!!\" :", with: "")
+                responceString = responceString.replacingOccurrences(of: "\"!!!<REQUEST>!!!\" :", with: "REQUEST: \n\t\t\t")
+                responceString = responceString.replacingOccurrences(of: "\"!!!<URL>!!!\" :", with: "URL: \n\t\t\t")
+                responceString = responceString.replacingOccurrences(of: "\"!!!<HEADERS>!!!\" :", with: "HEADERS: \n\t\t\t")
+                responceString = responceString.replacingOccurrences(of: "\"!!!<PARAMETERS>!!!\" :", with: "PARAMETERS: \n\t\t\t")
+                responceString = responceString.replacingOccurrences(of: "\"!!!<RESPONSE>!!!\" :", with: "RESPONSE: \n\t\t\t")
+                
+                if responceString.isEmpty {
+                    responceString = "Can't create string from responce"
+                }
+                
+                print(responceString)
+            } catch {
+                print("ERROR PRINTING RESPONCE")
+            }
+            
             print("-------------------------------------------------------------\n\n")
         }
         #endif
