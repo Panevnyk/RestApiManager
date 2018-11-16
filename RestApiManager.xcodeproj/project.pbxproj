@@ -42,9 +42,27 @@
 		D19FF299219D9883002F16BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D19FF297219D9883002F16BD /* LaunchScreen.storyboard */; };
 		D19FF2A0219D98AC002F16BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19FF29E219D98AC002F16BD /* ViewController.swift */; };
 		D19FF2A1219D98AC002F16BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19FF29F219D98AC002F16BD /* AppDelegate.swift */; };
+		D1A05A2A219ED72A0013EE0D /* RestApiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A05A29219ED72A0013EE0D /* RestApiConstants.swift */; };
+		D1A05A2D219ED77E0013EE0D /* QuestionsRestApiParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A05A2C219ED77E0013EE0D /* QuestionsRestApiParameters.swift */; };
+		D1A05A31219EDA140013EE0D /* QuestionsRestApiMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A05A30219EDA140013EE0D /* QuestionsRestApiMethods.swift */; };
+		D1A05A36219EE1E40013EE0D /* RestApiManager.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = D128BCC420468F8F004E0917 /* RestApiManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D1A9210E217A2DF800FFC269 /* URLSessionRestApiManagerDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A9210D217A2DF800FFC269 /* URLSessionRestApiManagerDIContainer.swift */; };
 		D1A92110217A353B00FFC269 /* RestApiManagerDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A9210F217A353B00FFC269 /* RestApiManagerDIContainer.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D1A05A35219EE1D60013EE0D /* Copy Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D1A05A36219EE1E40013EE0D /* RestApiManager.framework in Copy Files */,
+			);
+			name = "Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		D10C95A8218B477A00D656BE /* URLSessionRestApiManager+DataTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSessionRestApiManager+DataTask.swift"; sourceTree = "<group>"; };
@@ -86,6 +104,9 @@
 		D19FF29A219D9883002F16BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D19FF29E219D98AC002F16BD /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D19FF29F219D98AC002F16BD /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D1A05A29219ED72A0013EE0D /* RestApiConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestApiConstants.swift; sourceTree = "<group>"; };
+		D1A05A2C219ED77E0013EE0D /* QuestionsRestApiParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsRestApiParameters.swift; sourceTree = "<group>"; };
+		D1A05A30219EDA140013EE0D /* QuestionsRestApiMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsRestApiMethods.swift; sourceTree = "<group>"; };
 		D1A9210D217A2DF800FFC269 /* URLSessionRestApiManagerDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionRestApiManagerDIContainer.swift; sourceTree = "<group>"; };
 		D1A9210F217A353B00FFC269 /* RestApiManagerDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestApiManagerDIContainer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -243,12 +264,55 @@
 			children = (
 				D19FF29F219D98AC002F16BD /* AppDelegate.swift */,
 				D19FF29E219D98AC002F16BD /* ViewController.swift */,
-				D19FF292219D9882002F16BD /* Main.storyboard */,
+				D1A05A23219ECA220013EE0D /* RestApi */,
+				D1A05A24219ECA370013EE0D /* Storyboard */,
 				D19FF295219D9883002F16BD /* Assets.xcassets */,
-				D19FF297219D9883002F16BD /* LaunchScreen.storyboard */,
 				D19FF29A219D9883002F16BD /* Info.plist */,
 			);
 			path = Example;
+			sourceTree = "<group>";
+		};
+		D1A05A23219ECA220013EE0D /* RestApi */ = {
+			isa = PBXGroup;
+			children = (
+				D1A05A28219ED7180013EE0D /* RestApiConstants */,
+				D1A05A25219ED68D0013EE0D /* RestApiMethods */,
+				D1A05A2B219ED76C0013EE0D /* RestApiParameters */,
+			);
+			path = RestApi;
+			sourceTree = "<group>";
+		};
+		D1A05A24219ECA370013EE0D /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				D19FF292219D9882002F16BD /* Main.storyboard */,
+				D19FF297219D9883002F16BD /* LaunchScreen.storyboard */,
+			);
+			path = Storyboard;
+			sourceTree = "<group>";
+		};
+		D1A05A25219ED68D0013EE0D /* RestApiMethods */ = {
+			isa = PBXGroup;
+			children = (
+				D1A05A30219EDA140013EE0D /* QuestionsRestApiMethods.swift */,
+			);
+			path = RestApiMethods;
+			sourceTree = "<group>";
+		};
+		D1A05A28219ED7180013EE0D /* RestApiConstants */ = {
+			isa = PBXGroup;
+			children = (
+				D1A05A29219ED72A0013EE0D /* RestApiConstants.swift */,
+			);
+			path = RestApiConstants;
+			sourceTree = "<group>";
+		};
+		D1A05A2B219ED76C0013EE0D /* RestApiParameters */ = {
+			isa = PBXGroup;
+			children = (
+				D1A05A2C219ED77E0013EE0D /* QuestionsRestApiParameters.swift */,
+			);
+			path = RestApiParameters;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,6 +354,7 @@
 				D19FF288219D9882002F16BD /* Sources */,
 				D19FF289219D9882002F16BD /* Frameworks */,
 				D19FF28A219D9882002F16BD /* Resources */,
+				D1A05A35219EE1D60013EE0D /* Copy Files */,
 			);
 			buildRules = (
 			);
@@ -404,7 +469,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1A05A2D219ED77E0013EE0D /* QuestionsRestApiParameters.swift in Sources */,
 				D19FF2A1219D98AC002F16BD /* AppDelegate.swift in Sources */,
+				D1A05A31219EDA140013EE0D /* QuestionsRestApiMethods.swift in Sources */,
+				D1A05A2A219ED72A0013EE0D /* RestApiConstants.swift in Sources */,
 				D19FF2A0219D98AC002F16BD /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

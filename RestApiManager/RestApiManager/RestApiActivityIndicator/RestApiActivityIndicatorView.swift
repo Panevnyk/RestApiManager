@@ -31,10 +31,23 @@ public class RestApiActivityIndicatorView: UIView, RestApiDetailAnimable {
     
     /// setupView
     public func setupView() {
-        addSelfNibUsingConstraints()
+        guard let nib = loadOwnNib() else {
+            return
+        }
+        addSubviewUsingConstraints(view: nib)
         initialize()
     }
     
+    func loadOwnNib() -> UIView? {
+        let nibName = String(describing: type(of: self))
+        if let nibFiles = Bundle(identifier: "panevnyk.RestApiManager")?.loadNibNamed(nibName, owner: self, options: nil),
+            nibFiles.count > 0 {
+            return nibFiles.first as? UIView
+        }
+        return nil
+    }
+    
+    /// initialize base UI
     private func initialize() {
         alpha = 0
         contentView.layer.cornerRadius = 5

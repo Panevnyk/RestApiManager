@@ -7,14 +7,58 @@
 //
 
 import UIKit
+import RestApiManager
 
-class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
-
-
+final class ViewController: UIViewController {
+    // RestApiManager
+    private let restApiManager: RestApiManager =
+        URLSessionRestApiManager(urlSessionRestApiManagerDIContainer:
+            URLSessionRestApiManagerDIContainer(errorType: DefaultRestApiError.self,
+                                                printRequestInfo: true))
+    
+    // Questions method and parameters
+    private let questionsParameters = QuestionsRestApiParameters()
+    private lazy var getQuestionsMethod: QuestionsRestApiMethods = .getQuestions(questionsParameters)
 }
 
+// MARK: - Life cycle
+extension ViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+}
+
+// MARK: - Actions
+private extension ViewController {
+    @IBAction func sendAction(_ sender: Any) {
+        // Do some API method call
+        simpleCallWithIndicatorAndErrorAlert()
+    }
+}
+
+// MARK: - API call
+private extension ViewController {
+    func simpleCall() {
+        restApiManager.call(method: getQuestionsMethod) { (result: Result<String>) in
+            switch result {
+            case .success:
+                break
+            case .failure:
+                break
+            }
+        }
+    }
+    
+    func simpleCallWithIndicatorAndErrorAlert() {
+        restApiManager.call(method: getQuestionsMethod,
+                            indicator: true,
+                            errorAlert: true) { (result: Result<String>) in
+            switch result {
+            case .success:
+                break
+            case .failure:
+                break
+            }
+        }
+    }
+}

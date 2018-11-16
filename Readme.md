@@ -25,16 +25,6 @@
  In any file you'd like to use RestApiManager in, don't forget to
  import the framework with `import RestApiManager`.
  
- ## Usage
- 
- hhh
- 
- ```swift
- class T {
- 
- }
- ```
- 
  ## License
  
  RestApiManager is released under an MIT license. See [License.txt](License.txt) for more information.
