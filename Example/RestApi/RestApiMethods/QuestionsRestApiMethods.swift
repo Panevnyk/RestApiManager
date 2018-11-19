@@ -21,7 +21,8 @@ enum QuestionsRestApiMethods: RestApiMethod {
         case .getQuestions(let parameters):
             return RestApiData(url: RestApiConstants.baseURL + QuestionsRestApiMethods.getQuestionsUrl,
                                httpMethod: .get,
-                               parameters: parameters)
+                               parameters: parameters,
+                               keyPath: RestApiConstants.items)
         }
     }
 }
