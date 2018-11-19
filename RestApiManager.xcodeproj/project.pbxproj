@@ -48,6 +48,8 @@
 		D1A05A36219EE1E40013EE0D /* RestApiManager.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = D128BCC420468F8F004E0917 /* RestApiManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D1A9210E217A2DF800FFC269 /* URLSessionRestApiManagerDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A9210D217A2DF800FFC269 /* URLSessionRestApiManagerDIContainer.swift */; };
 		D1A92110217A353B00FFC269 /* RestApiManagerDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A9210F217A353B00FFC269 /* RestApiManagerDIContainer.swift */; };
+		D1E41DFF21A3008A00D7B011 /* ExampleRestApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E41DFE21A3008A00D7B011 /* ExampleRestApiError.swift */; };
+		D1E41E0121A3076500D7B011 /* AlwaysFailureRestApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E41E0021A3076500D7B011 /* AlwaysFailureRestApiError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -109,6 +111,8 @@
 		D1A05A30219EDA140013EE0D /* QuestionsRestApiMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionsRestApiMethods.swift; sourceTree = "<group>"; };
 		D1A9210D217A2DF800FFC269 /* URLSessionRestApiManagerDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionRestApiManagerDIContainer.swift; sourceTree = "<group>"; };
 		D1A9210F217A353B00FFC269 /* RestApiManagerDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestApiManagerDIContainer.swift; sourceTree = "<group>"; };
+		D1E41DFE21A3008A00D7B011 /* ExampleRestApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleRestApiError.swift; sourceTree = "<group>"; };
+		D1E41E0021A3076500D7B011 /* AlwaysFailureRestApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlwaysFailureRestApiError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +279,7 @@
 		D1A05A23219ECA220013EE0D /* RestApi */ = {
 			isa = PBXGroup;
 			children = (
+				D1E41DFD21A3006200D7B011 /* RestApiErrors */,
 				D1A05A28219ED7180013EE0D /* RestApiConstants */,
 				D1A05A25219ED68D0013EE0D /* RestApiMethods */,
 				D1A05A2B219ED76C0013EE0D /* RestApiParameters */,
@@ -313,6 +318,15 @@
 				D1A05A2C219ED77E0013EE0D /* QuestionsRestApiParameters.swift */,
 			);
 			path = RestApiParameters;
+			sourceTree = "<group>";
+		};
+		D1E41DFD21A3006200D7B011 /* RestApiErrors */ = {
+			isa = PBXGroup;
+			children = (
+				D1E41DFE21A3008A00D7B011 /* ExampleRestApiError.swift */,
+				D1E41E0021A3076500D7B011 /* AlwaysFailureRestApiError.swift */,
+			);
+			path = RestApiErrors;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -469,9 +483,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1E41DFF21A3008A00D7B011 /* ExampleRestApiError.swift in Sources */,
 				D1A05A2D219ED77E0013EE0D /* QuestionsRestApiParameters.swift in Sources */,
 				D19FF2A1219D98AC002F16BD /* AppDelegate.swift in Sources */,
 				D1A05A31219EDA140013EE0D /* QuestionsRestApiMethods.swift in Sources */,
+				D1E41E0121A3076500D7B011 /* AlwaysFailureRestApiError.swift in Sources */,
 				D1A05A2A219ED72A0013EE0D /* RestApiConstants.swift in Sources */,
 				D19FF2A0219D98AC002F16BD /* ViewController.swift in Sources */,
 			);

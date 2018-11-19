@@ -15,4 +15,6 @@ struct RestApiConstants {
     static let order = "order"
     static let sort = "sort"
     static let site = "site"
+    static let code = "code"
+    static let message = "message"
 }

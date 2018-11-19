@@ -13,7 +13,7 @@ final class ViewController: UIViewController {
     // RestApiManager
     private let restApiManager: RestApiManager =
         URLSessionRestApiManager(urlSessionRestApiManagerDIContainer:
-            URLSessionRestApiManagerDIContainer(errorType: DefaultRestApiError.self,
+            URLSessionRestApiManagerDIContainer(errorType: ExampleRestApiError.self,
                                                 printRequestInfo: true))
     
     // Questions method and parameters
