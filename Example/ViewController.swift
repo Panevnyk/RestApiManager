@@ -24,6 +24,6 @@ private extension ViewController {
     @IBAction func sendAction(_ sender: Any) {
         // Do some API method call
         stackoverflowItemService
-            .simpleCallWithIndicatorAndErrorAlert()
+            .callWithCustomResponseSerializer()
     }
 }

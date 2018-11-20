@@ -53,6 +53,7 @@
 		D1E41E0521A310BD00D7B011 /* StackoverflowItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E41E0421A310BD00D7B011 /* StackoverflowItemModel.swift */; };
 		D1E41E0721A3116F00D7B011 /* PostOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E41E0621A3116F00D7B011 /* PostOwner.swift */; };
 		D1E41E0921A3192B00D7B011 /* StackoverflowItemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E41E0821A3192B00D7B011 /* StackoverflowItemService.swift */; };
+		D1EE8E4521A40217009C42B4 /* StackoverflowResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE8E4421A40217009C42B4 /* StackoverflowResponseSerializer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -119,6 +120,7 @@
 		D1E41E0421A310BD00D7B011 /* StackoverflowItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackoverflowItemModel.swift; sourceTree = "<group>"; };
 		D1E41E0621A3116F00D7B011 /* PostOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOwner.swift; sourceTree = "<group>"; };
 		D1E41E0821A3192B00D7B011 /* StackoverflowItemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackoverflowItemService.swift; sourceTree = "<group>"; };
+		D1EE8E4421A40217009C42B4 /* StackoverflowResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackoverflowResponseSerializer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,6 +293,7 @@
 				D1A05A28219ED7180013EE0D /* RestApiConstants */,
 				D1A05A25219ED68D0013EE0D /* RestApiMethods */,
 				D1A05A2B219ED76C0013EE0D /* RestApiParameters */,
+				D1EE8E4321A401ED009C42B4 /* RestApiCustomResponseSerializers */,
 			);
 			path = RestApi;
 			sourceTree = "<group>";
@@ -344,6 +347,14 @@
 				D1E41E0621A3116F00D7B011 /* PostOwner.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		D1EE8E4321A401ED009C42B4 /* RestApiCustomResponseSerializers */ = {
+			isa = PBXGroup;
+			children = (
+				D1EE8E4421A40217009C42B4 /* StackoverflowResponseSerializer.swift */,
+			);
+			path = RestApiCustomResponseSerializers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -505,6 +516,7 @@
 				D1A05A2D219ED77E0013EE0D /* QuestionsRestApiParameters.swift in Sources */,
 				D1E41E0921A3192B00D7B011 /* StackoverflowItemService.swift in Sources */,
 				D19FF2A1219D98AC002F16BD /* AppDelegate.swift in Sources */,
+				D1EE8E4521A40217009C42B4 /* StackoverflowResponseSerializer.swift in Sources */,
 				D1A05A31219EDA140013EE0D /* QuestionsRestApiMethods.swift in Sources */,
 				D1E41E0121A3076500D7B011 /* AlwaysFailureRestApiError.swift in Sources */,
 				D1A05A2A219ED72A0013EE0D /* RestApiConstants.swift in Sources */,

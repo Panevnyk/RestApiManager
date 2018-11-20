@@ -18,4 +18,7 @@ struct RestApiConstants {
     static let code = "code"
     static let message = "message"
     static let items = "items"
+    static let hasMore = "has_more"
+    static let quotaMax = "quota_max"
+    static let quotaRemaining = "quota_remaining"
 }
