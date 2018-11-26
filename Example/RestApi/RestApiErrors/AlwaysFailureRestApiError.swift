@@ -38,9 +38,10 @@ final class AlwaysFailureRestApiError: RestApiError {
     ///
     /// - Parameters:
     ///   - error: Error?
+    ///   - urlResponse: URLResponse?
     ///   - data: Data?
     /// - Returns: AlwaysFailureRestApiError
-    static func handle(error: Error?, data: Data?) -> AlwaysFailureRestApiError? {
+    static func handle(error: Error?, urlResponse: URLResponse?, data: Data?) -> AlwaysFailureRestApiError? {
         return AlwaysFailureRestApiError(code: 0, details: "AlwaysFailureRestApiError")
     }
 }

@@ -38,9 +38,10 @@ final class ExampleRestApiError: RestApiError {
     ///
     /// - Parameters:
     ///   - error: Error?
+    ///   - urlResponse: URLResponse?
     ///   - data: Data? for parsing to Error
     /// - Returns: ExampleRestApiError
-    static func handle(error: Error?, data: Data?) -> ExampleRestApiError? {
+    static func handle(error: Error?, urlResponse: URLResponse?, data: Data?) -> ExampleRestApiError? {
         if let error = error {
             return ExampleRestApiError(error: error)
         } else if let data = data {

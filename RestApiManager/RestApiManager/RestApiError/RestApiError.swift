@@ -20,8 +20,15 @@ public protocol RestApiError: Error {
     init(code: Int)
     init(code: Int, details: String)
     
-    /// Handle
-    static func handle(error: Error?, data: Data?) -> Self?
+    /// handler error
+    /// if return nil - response will be parsed as .success()
+    ///
+    /// - Parameters:
+    ///   - error: Error?
+    ///   - urlResponse: URLResponse?
+    ///   - data: Data?
+    /// - Returns: AlwaysFailureRestApiError
+    static func handle(error: Error?, urlResponse: URLResponse?, data: Data?) -> Self?
 }
 
 extension RestApiError {

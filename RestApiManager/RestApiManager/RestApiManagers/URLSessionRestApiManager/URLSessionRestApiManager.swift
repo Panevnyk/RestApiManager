@@ -93,7 +93,7 @@ extension URLSessionRestApiManager {
     @discardableResult
     public func call<T: ResponseSerializer>(method: RestApiMethod, responseSerializer: T) -> URLSessionTask? {
         return createDataTaskWithET(method: method, errorType: E.self) { (data, urlResponse, error) in
-            self.handleCustomSerializerResponse(data: data, error: error, responseSerializer: responseSerializer, completionHandler: { (resData) in
+            self.handleCustomSerializerResponse(data: data, urlResponse: urlResponse, error: error, responseSerializer: responseSerializer, completionHandler: { (resData) in
                 responseSerializer.parse(method: method, response: urlResponse as? HTTPURLResponse, data: resData, error: error)
             })
         }
@@ -198,7 +198,7 @@ extension URLSessionRestApiManager {
         return createMultipartDataTaskWithET(multipartData: multipartData,
                                              method: method,
                                              errorType: E.self) { (data, urlResponse, error) in
-                                                self.handleCustomSerializerResponse(data: data, error: error, responseSerializer: responseSerializer, completionHandler: { (resData) in
+                                                self.handleCustomSerializerResponse(data: data, urlResponse: urlResponse, error: error, responseSerializer: responseSerializer, completionHandler: { (resData) in
                                                     responseSerializer.parse(method: method, response: urlResponse as? HTTPURLResponse, data: resData, error: error)
                                                 })
         }

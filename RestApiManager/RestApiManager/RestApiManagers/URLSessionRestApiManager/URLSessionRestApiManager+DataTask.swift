@@ -22,8 +22,9 @@ extension URLSessionRestApiManager {
     func createDataTask<T: Associated>(method: RestApiMethod,
                                        completion: @escaping (_ result: Result<T>) -> Void,
                                        completionHandler: @escaping (Data) -> Swift.Void) -> URLSessionTask? {
-        return createDataTaskWithET(method: method, errorType: E.self) { [unowned self] (data, _, error) in
+        return createDataTaskWithET(method: method, errorType: E.self) { [unowned self] (data, urlResponse, error) in
             self.handleResponse(data: data,
+                                urlResponse: urlResponse,
                                 error: error,
                                 completion: { (result: ResultWithET<T, E>) in
                                     completion(self.transformResponseType(fromResult: result))
@@ -45,8 +46,8 @@ extension URLSessionRestApiManager {
     func createDataTaskWithET<T: Associated, ET: RestApiError>(method: RestApiMethod,
                                                                completion: @escaping (_ result: ResultWithET<T, ET>) -> Void,
                                                                completionHandler: @escaping (Data) -> Swift.Void) -> URLSessionTask? {
-        return createDataTaskWithET(method: method, errorType: ET.self) { [unowned self] (data, _, error) in
-            self.handleResponse(data: data, error: error, completion: completion, completionHandler: completionHandler)
+        return createDataTaskWithET(method: method, errorType: ET.self) { [unowned self] (data, urlResponse, error) in
+            self.handleResponse(data: data, urlResponse: urlResponse, error: error, completion: completion, completionHandler: completionHandler)
         }
     }
     
@@ -95,8 +96,9 @@ extension URLSessionRestApiManager {
                                                 method: RestApiMethod,
                                                 completion: @escaping (_ result: Result<T>) -> Void,
                                                 completionHandler: @escaping (Data) -> Swift.Void) -> URLSessionTask? {
-        return createMultipartDataTaskWithET(multipartData: multipartData, method: method, errorType: E.self) { [unowned self] (data, _, error) in
+        return createMultipartDataTaskWithET(multipartData: multipartData, method: method, errorType: E.self) { [unowned self] (data, urlResponse, error) in
             self.handleResponse(data: data,
+                                urlResponse: urlResponse,
                                 error: error,
                                 completion: { (result: ResultWithET<T, E>) in
                                     completion(self.transformResponseType(fromResult: result))
@@ -122,8 +124,8 @@ extension URLSessionRestApiManager {
                                                                         completionHandler: @escaping (Data) -> Swift.Void) -> URLSessionTask? {
         return createMultipartDataTaskWithET(multipartData: multipartData,
                                              method: method,
-                                             errorType: ET.self) { [unowned self] (data, _, error) in
-                                                self.handleResponse(data: data, error: error, completion: completion, completionHandler: completionHandler)
+                                             errorType: ET.self) { [unowned self] (data, urlResponse, error) in
+                                                self.handleResponse(data: data, urlResponse: urlResponse, error: error, completion: completion, completionHandler: completionHandler)
         }
     }
     

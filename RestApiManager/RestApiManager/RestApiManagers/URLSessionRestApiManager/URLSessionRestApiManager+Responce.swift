@@ -58,12 +58,13 @@ extension URLSessionRestApiManager {
 // MARK: - Handle Response
 extension URLSessionRestApiManager {
     func handleResponse<T, ET: RestApiError>(data: Data?,
+                                             urlResponse: URLResponse?,
                                              error: Error?,
                                              completion: @escaping (_ result: ResultWithET<T, ET>) -> Void,
                                              completionHandler: @escaping (Data) -> Swift.Void) {
         
         /// Handle custom error
-        if let error = ET.handle(error: error, data: data) {
+        if let error = ET.handle(error: error, urlResponse: urlResponse, data: data) {
             completion(.failure(error))
         }
             /// Handle Error
@@ -80,30 +81,13 @@ extension URLSessionRestApiManager {
         }
     }
     
-    //    // FIXME: - FIXME TEST CODE
-    //    class Rest: RestApiMethod {
-    //        var data: RestApiData
-    //
-    //        init(){
-    //            data = RestApiData(url: "", httpMethod: .get)
-    //        }
-    //    }
-    //
-    //    class Simple: Decodable {}
-    
     func handleCustomSerializerResponse<T: ResponseSerializer>(data: Data?,
+                                                               urlResponse: URLResponse?,
                                                                error: Error?,
                                                                responseSerializer: T,
                                                                completionHandler: @escaping (Data) -> Swift.Void) {
-        
-        //        let fabric = URLSessionRestApiManagerDIContainer(errorType: DefaultRestApiError.self, printRequestInfo: false)
-        //        let restApiManager: RestApiManager = URLSessionRestApiManager<DefaultRestApiError>(urlSessionRestApiManagerDIContainer: fabric)
-        //        restApiManager.call(method: Rest()) { (res: ResultWithET<Simple, DefaultRestApiError>) in
-        //
-        //        }
-        
         /// Handle custom error
-        if let error = E.handle(error: error, data: data) {
+        if let error = E.handle(error: error, urlResponse: urlResponse, data: data) {
             responseSerializer.completion(.failure(error))
         }
             /// Handle Error
