@@ -78,6 +78,7 @@ extension RestApiManager {
                 responceString = responceString.replacingOccurrences(of: "        },\n        {\n          \"!!!<HEADERS>!!!\" : ", with: "\tHEADERS: \n\t\t  ")
                 responceString = responceString.replacingOccurrences(of: "\n        },\n        {\n          \"!!!<PARAMETERS>!!!\" : ", with: "\n\tPARAMETERS:\n\t\t  ")
                 responceString = responceString.replacingOccurrences(of: "\n        }\n      ]\n    },\n    {\n      \"!!!<RESPONSE>!!!\" : ", with: "\nRESPONSE:\n\t  ")
+                responceString = responceString.replacingOccurrences(of: "\\/", with: "/")
                 if responceString.count > 12 {
                     responceString.removeLast(12) // "\n    }\n  ]\n}"
                 }
