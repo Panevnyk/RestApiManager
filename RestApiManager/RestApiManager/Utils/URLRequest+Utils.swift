@@ -11,8 +11,14 @@ import Foundation
 extension URLRequest {
     mutating public func addHttpBody(parameters: Any) {
         do {
-            let jsonObject = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
-            httpBody = jsonObject
+            let data: Data
+            if let dataParameters = parameters as? Data {
+                data = dataParameters
+            } else {
+                data = try JSONSerialization.data(withJSONObject: parameters, options: .prettyPrinted)
+            }
+            httpBody = data
+            
         } catch let error {
             print("FAIL add http body: \(error)")
         }
