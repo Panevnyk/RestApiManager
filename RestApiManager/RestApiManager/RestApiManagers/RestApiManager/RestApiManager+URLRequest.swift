@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - Request
-extension RestApiManager {
+public extension RestApiManager {
     func request(method: RestApiMethod) -> URLRequest? {
         let urlString = method.data.httpMethod == .get ? method.data.urlWithParametersString : method.data.url
         guard let url = URL(string: urlString) else {
