@@ -61,5 +61,4 @@ public class DefaultRestApiAlert: RestApiAlert {
         }
         queue.addOperation(operation)
     }
-    
 }
