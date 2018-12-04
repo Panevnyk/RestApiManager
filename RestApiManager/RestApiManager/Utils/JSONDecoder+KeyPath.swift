@@ -32,7 +32,8 @@ public extension JSONDecoder {
 }
 
 /// The keypath key in the `userInfo`
-private let keyPathUserInfoKey = CodingUserInfoKey(rawValue: "keyPathUserInfoKey")! //swiftlint:disable:this force_unwrapping
+private let keyPathUserInfoKey = CodingUserInfoKey(rawValue: "keyPathUserInfoKey")!
+
 /// Object which is representing value
 private final class KeyPathWrapper<T: Decodable>: Decodable {
     enum KeyPathError: Error {
@@ -62,7 +63,7 @@ private final class KeyPathWrapper<T: Decodable>: Decodable {
             !keyPath.isEmpty
             else { throw KeyPathError.internal }
         
-        /// Creates a `Key` from the first keypath element
+        // Creates a `Key` from the first keypath element
         func getKey(from keyPath: [String]) throws -> Key {
             guard let first = keyPath.first,
                 let key = Key(stringValue: first)
@@ -70,7 +71,7 @@ private final class KeyPathWrapper<T: Decodable>: Decodable {
             return key
         }
         
-        /// Finds nested container and returns it and the key for object
+        // Finds nested container and returns it and the key for object
         func objectContainer(for keyPath: [String],
                              in currentContainer: KeyedContainer,
                              key currentKey: Key) throws -> (KeyedContainer, Key) {

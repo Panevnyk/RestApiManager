@@ -8,7 +8,8 @@
 
 import UIKit
 
-extension UIApplication {
+/// presentationViewController
+public extension UIApplication {
     class var presentationViewController: UIViewController? {
         var targetForPresent = UIApplication.shared.keyWindow?.rootViewController
         

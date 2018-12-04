@@ -23,7 +23,15 @@ public struct URLSessionRestApiManagerDIContainer<E: RestApiError>: RestApiManag
     /// PrintingRequest
     public var printRequestInfo: Bool
     
-    /// Init
+    /// init
+    ///
+    /// - Parameters:
+    ///   - errorType: E.Type
+    ///   - urlSession: URLSession
+    ///   - jsonDecoder: JSONDecoder
+    ///   - restApiAlert: RestApiAlert
+    ///   - restApiActivityIndicator: RestApiActivityIndicator
+    ///   - printRequestInfo: Bool
     public init(errorType: E.Type,
                 urlSession: URLSession = URLSession.shared,
                 jsonDecoder: JSONDecoder = JSONDecoder(),

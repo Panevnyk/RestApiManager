@@ -63,13 +63,13 @@ extension URLSessionRestApiManager {
             .urlSession
             .dataTask(with: request) { [unowned self] (data, urlResponse, error) in
                 
-                /// Print response
+                // Print response
                 self.printDataResponse(urlResponse, request: request, data: data)
                 
-                /// Completion Handler
+                // Completion Handler
                 completionHandler(data, urlResponse, error)
                 
-                /// clearURLSessionTask
+                // clearURLSessionTask
                 self.clearURLSessionTask()
         }
         dataTask.resume()
@@ -142,13 +142,13 @@ extension URLSessionRestApiManager {
             .urlSession
             .uploadTask(with: request, from: multipartData.data) { [unowned self] (data, urlResponse, error) in
                 
-                /// Print response
+                // Print response
                 self.printDataResponse(urlResponse, request: request, data: data)
                 
-                /// Completion Handler
+                // Completion Handler
                 completionHandler(data, urlResponse, error)
                 
-                /// clearURLSessionTask
+                // clearURLSessionTask
                 self.clearURLSessionTask()
         }
         dataTask.resume()

@@ -9,8 +9,8 @@
 import Foundation
 
 // MARK: - Show request and responce info
-extension RestApiManager {
-    public func printDataResponse(_ dataResponse: URLResponse?, request: URLRequest?, data: Data?) {
+public extension RestApiManager {
+    func printDataResponse(_ dataResponse: URLResponse?, request: URLRequest?, data: Data?) {
         #if DEBUG
         if restApiManagerDIContainer.printRequestInfo {
             var printString = "\n\n-------------------------------------------------------------\n"

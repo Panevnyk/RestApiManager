@@ -63,19 +63,19 @@ extension URLSessionRestApiManager {
                                              completion: @escaping (_ result: ResultWithET<T, ET>) -> Void,
                                              completionHandler: @escaping (Data) -> Swift.Void) {
         
-        /// Handle custom error
+        // Handle custom error
         if let error = ET.handle(error: error, urlResponse: urlResponse, data: data) {
             completion(.failure(error))
         }
-            /// Handle Error
+            // Handle Error
         else if let error = error {
             completion(.failure(ET.init(error: error)))
         }
-            /// Handle Data
+            // Handle Data
         else if let data = data {
             completionHandler(data)
         }
-            /// Handle unknown result
+            // Handle unknown result
         else {
             completion(.failure(ET.unknown))
         }
@@ -86,19 +86,19 @@ extension URLSessionRestApiManager {
                                                                error: Error?,
                                                                responseSerializer: T,
                                                                completionHandler: @escaping (Data) -> Swift.Void) {
-        /// Handle custom error
+        // Handle custom error
         if let error = E.handle(error: error, urlResponse: urlResponse, data: data) {
             responseSerializer.completion(.failure(error))
         }
-            /// Handle Error
+            // Handle Error
         else if let error = error {
             responseSerializer.completion(.failure(E.init(error: error)))
         }
-            /// Handle Data
+            // Handle Data
         else if let data = data {
             completionHandler(data)
         }
-            /// Handle unknown result
+            // Handle unknown result
         else {
             responseSerializer.completion(.failure(E.unknown))
         }
