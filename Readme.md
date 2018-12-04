@@ -246,7 +246,9 @@
  func hide()
  ```
  
- You can check more functionality of RestApiManager in [Example](Exaple) target.
+ #### Example target
+ 
+ You can check more functionality of RestApiManager in [Example](Example) target.
  
  ## License
  
