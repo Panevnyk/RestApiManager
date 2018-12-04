@@ -20,11 +20,11 @@ open class URLSessionRestApiManager<E>: RestApiManager where E: RestApiError {
     
     /// RestApiManagerDIContainer
     public var restApiManagerDIContainer: RestApiManagerDIContainer {
-        return urlSessionRestApiManagerDIContainer
+        return urlSessionRAMDIContainer
     }
     
-    /// URLSessionRestApiManagerDIContainer
-    let urlSessionRestApiManagerDIContainer: URLSessionRestApiManagerDIContainer<E>
+    /// URLSessionRAMDIContainer
+    let urlSessionRAMDIContainer: URLSessionRAMDIContainer<E>
     
     /// Current URLSessionTask
     public var currentURLSessionTasks: [URLSessionTask] = []
@@ -35,15 +35,15 @@ open class URLSessionRestApiManager<E>: RestApiManager where E: RestApiError {
     
     /// Init with URLSessionRestApiManager properties
     ///
-    /// - Parameter urlSessionRestApiManagerDIContainer: URLSessionRestApiManagerDIContainer
-    public init(urlSessionRestApiManagerDIContainer: URLSessionRestApiManagerDIContainer<E>) {
-        self.urlSessionRestApiManagerDIContainer = urlSessionRestApiManagerDIContainer
+    /// - Parameter urlSessionRAMDIContainer: URLSessionRAMDIContainer
+    public init(urlSessionRAMDIContainer: URLSessionRAMDIContainer<E>) {
+        self.urlSessionRAMDIContainer = urlSessionRAMDIContainer
     }
     
     /// Init with default URLSessionRestApiManager properties
     public init() {
-        urlSessionRestApiManagerDIContainer =
-            URLSessionRestApiManagerDIContainer(errorType: DefaultRestApiError.self) as! URLSessionRestApiManagerDIContainer<E>
+        urlSessionRAMDIContainer =
+            URLSessionRAMDIContainer(errorType: DefaultRestApiError.self) as! URLSessionRAMDIContainer<E>
     }
 }
 

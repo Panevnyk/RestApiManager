@@ -59,7 +59,7 @@ extension URLSessionRestApiManager {
             return nil
         }
         
-        let dataTask = urlSessionRestApiManagerDIContainer
+        let dataTask = urlSessionRAMDIContainer
             .urlSession
             .dataTask(with: request) { [unowned self] (data, urlResponse, error) in
                 
@@ -138,7 +138,7 @@ extension URLSessionRestApiManager {
             return nil
         }
         
-        let dataTask = urlSessionRestApiManagerDIContainer
+        let dataTask = urlSessionRAMDIContainer
             .urlSession
             .uploadTask(with: request, from: multipartData.data) { [unowned self] (data, urlResponse, error) in
                 

@@ -45,7 +45,7 @@ extension URLSessionRestApiManager {
                                                  keyPath: String?,
                                                  completion: @escaping (_ result: ResultWithET<T, ET>) -> Void) {
         do {
-            let object = try urlSessionRestApiManagerDIContainer
+            let object = try urlSessionRAMDIContainer
                 .jsonDecoder
                 .decode(T.self, from: data, keyPath: keyPath)
             completion(.success(object))

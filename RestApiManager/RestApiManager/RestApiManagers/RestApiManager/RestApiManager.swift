@@ -15,7 +15,7 @@ public protocol RestApiManager {
     // MARK: - Properties
     // ---------------------------------------------------------------------
     
-    /// URLSessionRestApiManagerDIContainer
+    /// URLSessionRAMDIContainer
     var restApiManagerDIContainer: RestApiManagerDIContainer { get }
     
     // ---------------------------------------------------------------------

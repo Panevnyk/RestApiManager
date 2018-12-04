@@ -1,5 +1,5 @@
 //
-//  URLSessionRestApiManagerDIContainer.swift
+//  URLSessionRAMDIContainer.swift
 //  RestApiManager
 //
 //  Created by Panevnyk Vlad on 10/19/18.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-/// URLSessionRestApiManagerDIContainer
-public struct URLSessionRestApiManagerDIContainer<E: RestApiError>: RestApiManagerDIContainer {
+/// URLSessionRAMDIContainer
+public struct URLSessionRAMDIContainer<E: RestApiError>: RestApiManagerDIContainer {
     /// RestApiError
     public var errorType: E.Type
     /// URLSession

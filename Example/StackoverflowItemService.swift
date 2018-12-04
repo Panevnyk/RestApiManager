@@ -11,8 +11,8 @@ import RestApiManager
 final class StackoverflowItemService {
     // RestApiManager
     private let restApiManager: RestApiManager =
-        URLSessionRestApiManager(urlSessionRestApiManagerDIContainer:
-            URLSessionRestApiManagerDIContainer(errorType: ExampleRestApiError.self,
+        URLSessionRestApiManager(urlSessionRAMDIContainer:
+            URLSessionRAMDIContainer(errorType: ExampleRestApiError.self,
                                                 printRequestInfo: true))
     
     // Questions method and parameters
@@ -59,8 +59,8 @@ extension StackoverflowItemService {
     
     // MARK: - Call with autoshow indicator and errorAlert
     /// Call method that parse response to [StackoverflowItemModel] Array in success case.
-    /// Automaticaly show and hide Indicator View (from URLSessionRestApiManagerDIContainer).
-    /// Automaticaly show Error Alert in failure case (from URLSessionRestApiManagerDIContainer).
+    /// Automaticaly show and hide Indicator View (from URLSessionRAMDIContainer).
+    /// Automaticaly show Error Alert in failure case (from URLSessionRAMDIContainer).
     func simpleCallWithIndicatorAndErrorAlert() {
         restApiManager.call(method: getQuestionsMethod, indicator: true, errorAlert: true) { (result: Result<[StackoverflowItemModel]>) in
             switch result {
