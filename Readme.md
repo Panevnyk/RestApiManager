@@ -22,7 +22,7 @@
  
  ## Usage
  
- ##### Instance
+ #### Instance
  
  For use RestApiManager, you can simply create URLSessionRAMDIContainer, and inject it to RestApiManager instance.
  In URLSessionRAMDIContainer you can customize (errorType, urlSession, jsonDecoder, restApiAlert, restApiActivityIndicator, printRequestInfo) properties.
@@ -32,7 +32,7 @@
  let restApiManager: RestApiManager = URLSessionRestApiManager(urlSessionRAMDIContainer: urlSessionRAMDIContainer)
  ```
  
- ##### Create method
+ #### Create method
  
  For create API method you should realize RestApiMethod and ParametersProtocol protocols.
  
@@ -75,7 +75,7 @@
  }
  ```
  
- ##### Call
+ #### Call
  
  For create API call, you should create RestApiMethod instance. And send request using some of existing "call" method of RestApiManager.
  
@@ -119,7 +119,7 @@
  }
  ```
  
- ##### Error handling
+ #### Error handling
  
  For error handling you can use our DefaultRestApiError.
  Or create your own error handling realization. For this, you should implement RestApiError protocol in your class, and inject it in URLSessionRAMDIContainer.
@@ -193,7 +193,7 @@
  let restApiManager: RestApiManager = URLSessionRestApiManager(urlSessionRAMDIContainer: urlSessionRAMDIContainer)
  ```
  
- ##### Autoshow error alert
+ #### Autoshow error alert
  
  For autoshow error alert you should set in "call" method "indicator" property as "true".
  You can use our DefaultRestApiAlert class for show alert.
@@ -234,7 +234,7 @@
  }
  ```
  
- ##### Autoshow load indicator
+ #### Autoshow load indicator
  
  For autoshow load indicator you should set in "call" method "indicator" property as "true".
  You can use our DefaultRestApiActivityIndicator class for show indicator.
