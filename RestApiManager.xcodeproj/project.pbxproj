@@ -51,7 +51,6 @@
 		D1E41E0121A3076500D7B011 /* AlwaysFailureRestApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E41E0021A3076500D7B011 /* AlwaysFailureRestApiError.swift */; };
 		D1E41E0521A310BD00D7B011 /* StackoverflowItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E41E0421A310BD00D7B011 /* StackoverflowItemModel.swift */; };
 		D1E41E0721A3116F00D7B011 /* PostOwner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E41E0621A3116F00D7B011 /* PostOwner.swift */; };
-		D1E41E0921A3192B00D7B011 /* StackoverflowItemService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E41E0821A3192B00D7B011 /* StackoverflowItemService.swift */; };
 		D1EE8E4521A40217009C42B4 /* StackoverflowResponseSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE8E4421A40217009C42B4 /* StackoverflowResponseSerializer.swift */; };
 /* End PBXBuildFile section */
 
@@ -117,7 +116,6 @@
 		D1E41E0021A3076500D7B011 /* AlwaysFailureRestApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlwaysFailureRestApiError.swift; sourceTree = "<group>"; };
 		D1E41E0421A310BD00D7B011 /* StackoverflowItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackoverflowItemModel.swift; sourceTree = "<group>"; };
 		D1E41E0621A3116F00D7B011 /* PostOwner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostOwner.swift; sourceTree = "<group>"; };
-		D1E41E0821A3192B00D7B011 /* StackoverflowItemService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackoverflowItemService.swift; sourceTree = "<group>"; };
 		D1EE8E4421A40217009C42B4 /* StackoverflowResponseSerializer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackoverflowResponseSerializer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -273,7 +271,6 @@
 			children = (
 				D19FF29F219D98AC002F16BD /* AppDelegate.swift */,
 				D19FF29E219D98AC002F16BD /* ViewController.swift */,
-				D1E41E0821A3192B00D7B011 /* StackoverflowItemService.swift */,
 				D1E41E0221A3104200D7B011 /* Models */,
 				D1A05A23219ECA220013EE0D /* RestApi */,
 				D1A05A24219ECA370013EE0D /* Storyboard */,
@@ -510,7 +507,6 @@
 				D1E41DFF21A3008A00D7B011 /* ExampleRestApiError.swift in Sources */,
 				D1E41E0521A310BD00D7B011 /* StackoverflowItemModel.swift in Sources */,
 				D1A05A2D219ED77E0013EE0D /* QuestionsRestApiParameters.swift in Sources */,
-				D1E41E0921A3192B00D7B011 /* StackoverflowItemService.swift in Sources */,
 				D19FF2A1219D98AC002F16BD /* AppDelegate.swift in Sources */,
 				D1EE8E4521A40217009C42B4 /* StackoverflowResponseSerializer.swift in Sources */,
 				D1A05A31219EDA140013EE0D /* QuestionsRestApiMethods.swift in Sources */,
