@@ -8,32 +8,6 @@
 
 import Foundation
 
-// MARK: - DataTask with Result type responce
-extension URLSessionRestApiManager {
-    func createDataTask<T: Associated>(method: RestApiMethod,
-                                       completion: @escaping (_ result: Result<T>) -> Void) -> URLSessionTask? {
-        return createDataTask(method: method, completion: completion) { [unowned self] (data) in
-            self.decode(data: data, keyPath: method.data.keyPath) { (result: ResultWithET<T, E>) in
-                completion(self.transformResponseType(fromResult: result))
-            }
-        }
-    }
-    
-    func createDataTask<T: Associated>(method: RestApiMethod,
-                                       completion: @escaping (_ result: Result<T>) -> Void,
-                                       completionHandler: @escaping (Data) -> Swift.Void) -> URLSessionTask? {
-        return createDataTaskWithET(method: method, errorType: E.self) { [unowned self] (data, urlResponse, error) in
-            self.handleResponse(data: data,
-                                urlResponse: urlResponse,
-                                error: error,
-                                completion: { (result: ResultWithET<T, E>) in
-                                    completion(self.transformResponseType(fromResult: result))
-            },
-                                completionHandler: completionHandler)
-        }
-    }
-}
-
 // MARK: - DataTask with ResultWithET type responce
 extension URLSessionRestApiManager {
     func createDataTaskWithET<T: Associated, ET: RestApiError>(method: RestApiMethod,
@@ -77,34 +51,6 @@ extension URLSessionRestApiManager {
         appendURLSessionTask(dataTask)
         
         return dataTask
-    }
-}
-
-// MARK: - MultipartDataTask with Result type responce
-extension URLSessionRestApiManager {
-    func createMultipartDataTask<T: Associated>(multipartData: MultipartData,
-                                                method: RestApiMethod,
-                                                completion: @escaping (_ result: Result<T>) -> Void) -> URLSessionTask? {
-        return createMultipartDataTask(multipartData: multipartData, method: method, completion: completion) { [unowned self] (data) in
-            self.decode(data: data, keyPath: method.data.keyPath) { (result: ResultWithET<T, E>) in
-                completion(self.transformResponseType(fromResult: result))
-            }
-        }
-    }
-    
-    func createMultipartDataTask<T: Associated>(multipartData: MultipartData,
-                                                method: RestApiMethod,
-                                                completion: @escaping (_ result: Result<T>) -> Void,
-                                                completionHandler: @escaping (Data) -> Swift.Void) -> URLSessionTask? {
-        return createMultipartDataTaskWithET(multipartData: multipartData, method: method, errorType: E.self) { [unowned self] (data, urlResponse, error) in
-            self.handleResponse(data: data,
-                                urlResponse: urlResponse,
-                                error: error,
-                                completion: { (result: ResultWithET<T, E>) in
-                                    completion(self.transformResponseType(fromResult: result))
-            },
-                                completionHandler: completionHandler)
-        }
     }
 }
 

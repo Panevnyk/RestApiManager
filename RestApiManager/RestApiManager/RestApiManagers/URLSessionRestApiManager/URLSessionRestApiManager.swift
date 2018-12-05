@@ -57,7 +57,9 @@ extension URLSessionRestApiManager {
     /// - Returns: URLSessionTask?
     @discardableResult
     public func call<T: Associated>(method: RestApiMethod, completion: @escaping (_ result: Result<T>) -> Void) -> URLSessionTask? {
-        return createDataTask(method: method, completion: completion)
+        return call(method: method) { (result: ResultWithET<T, E>) in
+            completion(self.transformResponseType(fromResult: result))
+        }
     }
     
     /// Array call
@@ -68,7 +70,9 @@ extension URLSessionRestApiManager {
     /// - Returns: URLSessionTask?
     @discardableResult
     public func call<T: Associated>(method: RestApiMethod, completion: @escaping (_ result: Result<[T]>) -> Void) -> URLSessionTask? {
-        return createDataTask(method: method, completion: completion)
+        return call(method: method) { (result: ResultWithET<[T], E>) in
+            completion(self.transformResponseType(fromResult: result))
+        }
     }
     
     /// String call
@@ -79,8 +83,8 @@ extension URLSessionRestApiManager {
     /// - Returns: URLSessionTask?
     @discardableResult
     public func call(method: RestApiMethod, completion: @escaping (_ result: Result<String>) -> Void) -> URLSessionTask? {
-        return createDataTask(method: method, completion: completion) { [unowned self] (data) in
-            completion(self.transformResponseType(fromData: data))
+        return call(method: method) { (result: ResultWithET<String, E>) in
+            completion(self.transformResponseType(fromResult: result))
         }
     }
     
@@ -151,7 +155,9 @@ extension URLSessionRestApiManager {
     public func call<T: Associated>(multipartData: MultipartData,
                                     method: RestApiMethod,
                                     completion: @escaping (_ result: Result<T>) -> Void) -> URLSessionTask? {
-        return createMultipartDataTask(multipartData: multipartData, method: method, completion: completion)
+        return call(multipartData: multipartData, method: method) { (result: ResultWithET<T, E>) in
+            completion(self.transformResponseType(fromResult: result))
+        }
     }
     
     /// Multipart Array call
@@ -165,7 +171,9 @@ extension URLSessionRestApiManager {
     public func call<T: Associated>(multipartData: MultipartData,
                                     method: RestApiMethod,
                                     completion: @escaping (_ result: Result<[T]>) -> Void) -> URLSessionTask? {
-        return createMultipartDataTask(multipartData: multipartData, method: method, completion: completion)
+        return call(multipartData: multipartData, method: method) { (result: ResultWithET<[T], E>) in
+            completion(self.transformResponseType(fromResult: result))
+        }
     }
     
     /// Multipart String call
@@ -179,8 +187,8 @@ extension URLSessionRestApiManager {
     public func call(multipartData: MultipartData,
                      method: RestApiMethod,
                      completion: @escaping (_ result: Result<String>) -> Void) -> URLSessionTask? {
-        return createMultipartDataTask(multipartData: multipartData, method: method, completion: completion) { [unowned self] (data) in
-            completion(self.transformResponseType(fromData: data))
+        return call(multipartData: multipartData, method: method) { (result: ResultWithET<String, E>) in
+            completion(self.transformResponseType(fromResult: result))
         }
     }
     
