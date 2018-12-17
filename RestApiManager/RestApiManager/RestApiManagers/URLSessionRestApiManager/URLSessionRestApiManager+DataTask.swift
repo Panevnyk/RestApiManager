@@ -108,15 +108,19 @@ extension URLSessionRestApiManager {
 // MARK: - Work URLSessionTask
 extension URLSessionRestApiManager {
     func appendURLSessionTask(_ dataTask: URLSessionTask) {
-        currentURLSessionTasks.append(dataTask)
+        DispatchQueue.main.async { [unowned self] in
+            self.currentURLSessionTasks.append(dataTask)
+        }
     }
     
     func clearURLSessionTask() {
-        var offset = 0
-        for (index, currentDataTask) in currentURLSessionTasks.enumerated() {
-            if currentDataTask.state == .canceling || currentDataTask.state == .completed {
-                currentURLSessionTasks.remove(at: index - offset)
-                offset += 1
+        DispatchQueue.main.async { [unowned self] in
+            var offset = 0
+            for (index, currentDataTask) in self.currentURLSessionTasks.enumerated() {
+                if currentDataTask.state == .canceling || currentDataTask.state == .completed {
+                    self.currentURLSessionTasks.remove(at: index - offset)
+                    offset += 1
+                }
             }
         }
     }
