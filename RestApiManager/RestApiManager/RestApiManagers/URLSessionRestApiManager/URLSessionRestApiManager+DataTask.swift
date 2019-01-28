@@ -35,16 +35,16 @@ extension URLSessionRestApiManager {
         
         let dataTask = urlSessionRAMDIContainer
             .urlSession
-            .dataTask(with: request) { [unowned self] (data, urlResponse, error) in
+            .dataTask(with: request) { [weak self] (data, urlResponse, error) in
                 
                 // Print response
-                self.printDataResponse(urlResponse, request: request, data: data)
+                self?.printDataResponse(urlResponse, request: request, data: data)
                 
                 // Completion Handler
                 completionHandler(data, urlResponse, error)
                 
                 // clearURLSessionTask
-                self.clearURLSessionTask()
+                self?.clearURLSessionTask()
         }
         dataTask.resume()
         
@@ -86,16 +86,16 @@ extension URLSessionRestApiManager {
         
         let dataTask = urlSessionRAMDIContainer
             .urlSession
-            .uploadTask(with: request, from: multipartData.data) { [unowned self] (data, urlResponse, error) in
-                
+            .uploadTask(with: request, from: multipartData.data) { [weak self] (data, urlResponse, error) in
+
                 // Print response
-                self.printDataResponse(urlResponse, request: request, data: data)
+                self?.printDataResponse(urlResponse, request: request, data: data)
                 
                 // Completion Handler
                 completionHandler(data, urlResponse, error)
                 
                 // clearURLSessionTask
-                self.clearURLSessionTask()
+                self?.clearURLSessionTask()
         }
         dataTask.resume()
         
@@ -108,17 +108,19 @@ extension URLSessionRestApiManager {
 // MARK: - Work URLSessionTask
 extension URLSessionRestApiManager {
     func appendURLSessionTask(_ dataTask: URLSessionTask) {
-        DispatchQueue.main.async { [unowned self] in
-            self.currentURLSessionTasks.append(dataTask)
+        DispatchQueue.main.async { [weak self] in
+            self?.currentURLSessionTasks.append(dataTask)
         }
     }
     
     func clearURLSessionTask() {
-        DispatchQueue.main.async { [unowned self] in
+        DispatchQueue.main.async { [weak self] in
             var offset = 0
-            for (index, currentDataTask) in self.currentURLSessionTasks.enumerated() {
+            let tasks = self?.currentURLSessionTasks ?? []
+            
+            for (index, currentDataTask) in tasks.enumerated() {
                 if currentDataTask.state == .canceling || currentDataTask.state == .completed {
-                    self.currentURLSessionTasks.remove(at: index - offset)
+                    self?.currentURLSessionTasks.remove(at: index - offset)
                     offset += 1
                 }
             }
