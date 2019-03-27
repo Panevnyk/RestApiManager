@@ -16,9 +16,9 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "RestApiManager"
-  s.version      = "0.2.4"
+  s.version      = "0.2.5"
   s.summary      = "RestApiManager"
-  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '4.2' }
+  s.pod_target_xcconfig = { 'SWIFT_VERSION' => '5.0' }
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
