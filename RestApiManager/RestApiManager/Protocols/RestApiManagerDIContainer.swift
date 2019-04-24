@@ -16,4 +16,6 @@ public protocol RestApiManagerDIContainer {
     var restApiActivityIndicator: RestApiActivityIndicator { get }
     /// PrintingRequest
     var printRequestInfo: Bool { get }
+    /// TimeoutInterval
+    var timeoutInterval: Double { get }
 }

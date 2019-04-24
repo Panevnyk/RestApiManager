@@ -22,6 +22,8 @@ public struct URLSessionRAMDIContainer<E: RestApiError>: RestApiManagerDIContain
     public var restApiActivityIndicator: RestApiActivityIndicator
     /// PrintingRequest
     public var printRequestInfo: Bool
+    /// TimeoutInterval
+    public var timeoutInterval: Double
     
     /// init
     ///
@@ -37,12 +39,14 @@ public struct URLSessionRAMDIContainer<E: RestApiError>: RestApiManagerDIContain
                 jsonDecoder: JSONDecoder = JSONDecoder(),
                 restApiAlert: RestApiAlert = DefaultRestApiAlert(),
                 restApiActivityIndicator: RestApiActivityIndicator = DefaultRestApiActivityIndicator(),
-                printRequestInfo: Bool = true) {
+                printRequestInfo: Bool = true,
+                timeoutInterval: Double = 15.0) {
         self.errorType = errorType
         self.urlSession = urlSession
         self.jsonDecoder = jsonDecoder
         self.restApiAlert = restApiAlert
         self.restApiActivityIndicator = restApiActivityIndicator
         self.printRequestInfo = printRequestInfo
+        self.timeoutInterval = timeoutInterval
     }
 }

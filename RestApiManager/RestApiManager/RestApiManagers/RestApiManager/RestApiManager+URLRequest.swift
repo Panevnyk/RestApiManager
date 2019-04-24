@@ -16,7 +16,7 @@ public extension RestApiManager {
             return nil
         }
         var urlRequest = URLRequest(url: url)
-        urlRequest.timeoutInterval = 15.0
+        urlRequest.timeoutInterval = restApiManagerDIContainer.timeoutInterval
         urlRequest.httpMethod = method.data.httpMethod.rawValue
         urlRequest.addHeaders(method.data.headers)
         if method.data.httpMethod != .get {
