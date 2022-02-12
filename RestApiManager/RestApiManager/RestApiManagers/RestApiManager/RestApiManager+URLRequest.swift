@@ -19,8 +19,8 @@ public extension RestApiManager {
         urlRequest.timeoutInterval = restApiManagerDIContainer.timeoutInterval
         urlRequest.httpMethod = method.data.httpMethod.rawValue
         urlRequest.addHeaders(method.data.headers)
-        if method.data.httpMethod != .get {
-            urlRequest.addHttpBody(parameters: method.data.parameters)
+        if method.data.httpMethod != .get, let parameters = method.data.parameters {
+            urlRequest.addHttpBody(parameters: parameters)
         }
         return urlRequest
     }

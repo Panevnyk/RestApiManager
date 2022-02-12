@@ -13,7 +13,7 @@ public struct RestApiData {
     public var url: String
     public var httpMethod: HttpMethod
     public var headers: [String: String]?
-    public var parameters: Any
+    public var parameters: Any?
     public var keyPath: String?
     
     public init(url: String,
@@ -25,7 +25,7 @@ public struct RestApiData {
         self.httpMethod = httpMethod
         self.headers = headers
         self.keyPath = keyPath
-        self.parameters = parameters?.parametersValue ?? [:]
+        self.parameters = parameters?.parametersValue
     }
 }
 
